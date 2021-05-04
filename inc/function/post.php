@@ -1,5 +1,61 @@
 <?php
-class Post extends DB {
+class Post extends DB {	
+	//Init
+	function Init() {
+		$query_it = "CREATE TABLE banner (
+    id smallint,
+    name character varying(56) DEFAULT NULL::character varying,
+    img character varying(31) DEFAULT NULL::character varying,
+    link character varying(86) DEFAULT NULL::character varying
+);
+CREATE TABLE category (
+    id smallint,
+    name character varying(14) DEFAULT NULL::character varying
+);
+CREATE TABLE customer (
+    id smallint,
+    youare smallint,
+    fullname character varying(17) DEFAULT NULL::character varying,
+    email character varying(24) DEFAULT NULL::character varying,
+    telephone bigint,
+    address character varying(58) DEFAULT NULL::character varying,
+    password character varying(32) DEFAULT NULL::character varying,
+    cartnow character varying(2) DEFAULT NULL::character varying
+);
+CREATE TABLE order_details (
+    id smallint,
+    orderid smallint,
+    productid smallint,
+    qty smallint
+);
+CREATE TABLE order_sp (
+    orderid smallint,
+    custid smallint,
+    store_id smallint,
+    notes character varying(2) DEFAULT NULL::character varying,
+    'time' character varying(10) DEFAULT NULL::character varying,
+    status smallint
+);
+CREATE TABLE product (
+    productid smallint,
+    category smallint,
+    name character varying(63) DEFAULT NULL::character varying,
+    price integer,
+    img character varying(31) DEFAULT NULL::character varying,
+    descc character varying(350) DEFAULT NULL::character varying,
+    config character varying(1000) DEFAULT NULL::character varying,
+    sale smallint
+);
+CREATE TABLE store (
+    store_id smallint,
+    store_name character varying(9) DEFAULT NULL::character varying,
+    store_address character varying(11) DEFAULT NULL::character varying,
+    store_phone character varying(10) DEFAULT NULL::character varying
+);
+";
+			pg_query($this->db,$query_it);	
+			echo "Khoi tao thanh cong!";
+	}
 	//Add san pham
 	function addProduct($category, $tensp, $giatien, $linkanh, $mota, $cauhinh, $sale){
 		$query_it = "INSERT INTO product (category, name, price, img, descc, config, sale) VALUES ('$category', '$tensp', '$giatien', '$linkanh', '$mota', '$cauhinh', $sale)";
