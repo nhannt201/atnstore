@@ -1,0 +1,9 @@
+RewriteEngine on
+RewriteRule admin.html $1\admin.php
+RewriteRule edit $1\edit.php
+RewriteRule change.html $1\change_us.php
+RewriteRule search $1\search.php
+RewriteRule carts.html $1\xemhang.php
+RewriteRule view-order $1\vieworder.php
+RewriteRule ^toys/([^_]*)_([^_]*)\.html$ /show.php??name=$1&id=$2 [L]
+RewriteRule ^brand/([^_]*)_([^_]*)\.html$ /show_all.php??name=$1&id=$2 [L]
