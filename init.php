@@ -94,7 +94,6 @@ class Get extends DB {
 				//}	
 	}
 }
-
 class Post extends DB {
 	function upMenu($id, $name){
 		$query_it = "UPDATE menu SET name='$name' WHERE id='$id'";
@@ -132,23 +131,23 @@ class Post extends DB {
 			
 CREATE TABLE banner (
     id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
-    img TEXT NOT NULL,
-    link TEXT NOT NULL
+    name character varying(56) DEFAULT NULL::character varying,
+    img character varying(31) DEFAULT NULL::character varying,
+    link character varying(86) DEFAULT NULL::character varying
 );
 CREATE TABLE category (
     id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL
+    name character varying(14) DEFAULT NULL::character varying
 );
 CREATE TABLE customer (
     id SERIAL PRIMARY KEY,
     youare smallint,
-    fullname TEXT NOT NULL,
-    email TEXT NOT NULL,
+    fullname character varying(17) DEFAULT NULL::character varying,
+    email character varying(24) DEFAULT NULL::character varying,
     telephone bigint,
-    address TEXT NOT NULL,
-    password TEXT NOT NULL,
-    cartnow TEXT NOT NULL
+    address character varying(58) DEFAULT NULL::character varying,
+    password character varying(32) DEFAULT NULL::character varying,
+    cartnow character varying(2) DEFAULT NULL::character varying
 );
 CREATE TABLE order_details (
     id SERIAL PRIMARY KEY,
@@ -160,25 +159,25 @@ CREATE TABLE order_sp (
     orderid SERIAL PRIMARY KEY,
     custid smallint,
     store_id smallint,
-    notes TEXT NOT NULL,
-    time TEXT NOT NULL,
+    notes character varying(2) DEFAULT NULL::character varying,
+    'time' character varying(10) DEFAULT NULL::character varying,
     status smallint
 );
 CREATE TABLE product (
     productid SERIAL PRIMARY KEY,
     category smallint,
-    name TEXT NOT NULL,
+    name character varying(63) DEFAULT NULL::character varying,
     price integer,
-    img TEXT NOT NULL,
-    descc TEXT NOT NULL,
-    config TEXT NOT NULL,
+    img character varying(31) DEFAULT NULL::character varying,
+    descc character varying(350) DEFAULT NULL::character varying,
+    config character varying(1000) DEFAULT NULL::character varying,
     sale smallint
 );
 CREATE TABLE store (
     store_id SERIAL PRIMARY KEY,
-    store_name TEXT NOT NULL,
-    store_address TEXT NOT NULL,
-    store_phone TEXT NOT NULL
+    store_name character varying(9) DEFAULT NULL::character varying,
+    store_address character varying(11) DEFAULT NULL::character varying,
+    store_phone character varying(10) DEFAULT NULL::character varying
 );";
 			pg_query($this->db,$query_it);	
 			echo "Create Table!";
@@ -293,6 +292,7 @@ ALTER TABLE product
 
 ALTER TABLE store
   ADD PRIMARY KEY (store_id);";
+  
   pg_query($this->db,$q2);	
 			echo "<br>Add data to Table!";
 	}
