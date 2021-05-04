@@ -4,15 +4,7 @@
 			//new PDO("pgsql:host=ec2-52-1-115-6.compute-1.amazonaws.com;port=5432;dbname=dfc9kg4tdm8436;user=wimolppypfmrfd;password=45bdbcb28245bfb01ce99e2a525bdab01b81e7aa922696c14984d800fcf9071b");
 			pg_set_client_encoding($conn, "UTF8");
 
-		
-		/**	$query_it = "DROP TABLE IF EXISTS banner;
-			DROP TABLE IF EXISTS banner;
-			DROP TABLE IF EXISTS category;
-			DROP TABLE IF EXISTS customer;
-			DROP TABLE IF EXISTS order_details;
-			DROP TABLE IF EXISTS order_sp;
-			DROP TABLE IF EXISTS product;
-			DROP TABLE IF EXISTS store;
+			$q2 = "
 			
 CREATE TABLE banner (
     id SERIAL PRIMARY KEY,
@@ -65,12 +57,63 @@ CREATE TABLE store (
     store_phone character varying(10) DEFAULT NULL::character varying
 );
 
-  
-";
-			pg_query($this->db,$query_it);	
-			echo "Create Table!";**/
-			
-			$q2 = "
+INSERT INTO banner (id, name, img, link) VALUES
+(1, 'Laugh & Learn® Smart Stages™ Learn With Puppy Walker toy', 'https://i.imgur.com/slEZxGp.png', '/toys/laugh---learn---smart-stages----learn-with-puppy-walker--_5.html'),
+(2, 'Real Wood Adventures™ Bobcat Ridge™', 'https://i.imgur.com/jY1leww.png', '/toys/real-wood-adventures----bobcat-ridge---_10.html'),
+(3, 'Jurassic World Destroy', 'https://i.imgur.com/vQTK3xJ.png', '/toys/jurassic-world-destroy--n-devour-indominus-rex_14.html');
+
+INSERT INTO category (id, name) VALUES
+(1, 'Fisher Price'),
+(2, 'Little Tikes'),
+(3, 'Mattel'),
+(4, 'Summer Infant'),
+(5, 'Lego'),
+(6, 'Intex'),
+(7, 'Fischertechnik');
+
+INSERT INTO customer (id, youare, fullname, email, telephone, address, password, cartnow) VALUES
+(1, 1, 'Nhan Trung Nguyen', 'trungnhan21.12@gmail.com', '0907375645', 'Dang Thuy Tram Street, Ward 13, Binh Thanh District20/28', '0efa80c2712d2821d166bc6fc1917dbe', '[]');
+
+
+INSERT INTO order_details (id, orderID, productID, qty) VALUES
+(1, '1', 14, 2),
+(2, '1', 11, 1),
+(3, '2', 3, 1),
+(4, '2', 4, 1),
+(5, '2', 8, 1),
+(6, '2', 6, 1),
+(7, '3', 8, 1),
+(8, '3', 10, 1),
+(9, '4', 2, 1),
+(10, '4', 4, 1),
+(11, '4', 1, 1),
+(12, '5', 9, 1),
+(13, '5', 6, 1),
+(14, '6', 5, 1),
+(15, '6', 2, 1),
+(16, '6', 3, 1),
+(17, '6', 11, 1),
+(18, '7', 10, 1),
+(19, '8', 4, 1),
+(21, '10', 4, 1);
+
+INSERT INTO order_sp (orderID, custID, store_id, notes, time, status) VALUES
+(1, 1, 2, '', '23-04-2021', 1),
+(2, 1, 2, '', '20-04-2021', 0),
+(3, 1, 0, '', '21-04-2021', 1),
+(4, 1, 1, '', '22-04-2021', 1),
+(5, 1, 0, '', '23-04-2021', 0),
+(6, 1, 1, '', '04-05-2021', 0),
+(7, 1, 0, '', '04-05-2021', 1),
+(8, 1, 1, '', '04-05-2021', 0),
+(10, 1, 0, 'ok', '04-05-2021', 0);
+
+INSERT INTO store (store_id, store_name, store_address, store_phone) VALUES
+				(0, 'Leeds', 'Los Angeles', '5765734552'),
+				(1, 'Belfast', '', ''),
+				(2, 'Liverpool', '', ''),
+				(3, 'Bradford', '', '');
+				
 INSERT INTO product (productID, category, name, price, img, descc, config, sale) VALUES
 (1, 1, 'Calming Clouds™ Mobile &amp; Soother', 500000, 'https://i.imgur.com/wKSwYzD.png', 'Get little ones excited for their future rides to school with the Little People® Sit with Me School Bus! Get the fun started by pressing the Discovery Button to flip open the stop sign and pop open the door to let on passengers.', 'Get little ones excited for their future rides to school with the Little People® Sit with Me School Bus! Get the fun started by pressing the Discovery Button to flip open the stop sign and pop open the door to let on passengers.Get little ones excited for their future rides to school with the Little People® Sit with Me School Bus! Get the fun started by pressing the Discovery Button to flip open the stop sign and pop open the door to let on passengers.Get little ones excited for their future rid', 0),
 (2, 1, 'Fisher-Price® Twinkle &amp; Cuddle Cloud Soother', 725000, 'https://i.imgur.com/AguJUYK.png', 'The Twinkle &amp; Cuddle Cloud Soother from Fisher-Price is a cuddly friend that helps comfort and soothe your baby as they grow from the crib to a big-kid bed. ', 'The Twinkle &amp; Cuddle Cloud Soother from Fisher-Price is a cuddly friend that helps comfort and soothe your baby as they grow from the crib to a big-kid bed. The cloud easily attaches to most cribs and features the Ready, Settle, Sleep™ playlist of gentle music and soft white noise, which syncs with the multicolor light show to set a soothing scene for sweet dreams. And since every baby is different, you can easily customize the music, soothing nature sounds, volume, and light color to find the combination that works best for your little snoozer! As your baby grows, this snuggly soother becomes a comforting take-along pal.', 2),
@@ -99,8 +142,10 @@ INSERT INTO product (productID, category, name, price, img, descc, config, sale)
 (25, 5, 'Harry Potter & Hermione Granger™', 2767269, 'https://i.imgur.com/xBgTIDH.png', 'Make a BIG impression on any young witch or wizard with the super-sized LEGO® Harry Potter™: Harry Potter & Hermione Granger™ (76393).', 'Make a BIG impression on any young witch or wizard with the super-sized LEGO® Harry Potter™: Harry Potter & Hermione Granger™ (76393).\r\n\r\nLarge-scale, iconic figures\r\nKids can maximize the magical fun with these brick-built Harry Potter and Hermione Granger models. Both figures stand 10 in. (26 cm) tall and possess all the adjustability of the smaller LEGO minifigures: movable hand, leg and hip joints, plus a rotatable head for the Harry Potter figure. Harry has a removable, fabric robe and both models carry brick-built wands to help inspire magical stories for kids to play out. When the action stops, kids can put the 2 Hogwarts™ friends into a pose to create an amazing ‘Harry and Hermione’ display for their room. Individual sets of building instructions allow 2 builders to share the fun together.', 3);
 
 
+
+
 ";
   
-			pg_query($conn,$q2);	
+  pg_query($conn,$q2);	
 			echo "<br>Add data to Table!";
 	
