@@ -10,8 +10,7 @@ class DB {
 		if(!isset($this->db)){
 			//$t=time();
 			//$conn = mysqli_connect($this->hostname, $this->username, $this->password,$this->database);
-						$conn = pg_connect("host=ec2-54-146-73-98.compute-1.amazonaws.com port=5432 dbname=d9em16ehhf5pme user=wofdatlexxslwy password=1666c34bee3841c53bfd8512e9a871179c3d7fd9beb920690162b79060bc7055");
-
+			$conn = pg_connect("host=ec2-54-167-152-185.compute-1.amazonaws.com port=5432 dbname=dcqa0np5l3i67k user=ecqsxulgbhyxbt password=5085b01e99638c8cccd7b748f8d78e18e4cedfd5c923e169b21ba5f101abceb1");
 			//new PDO("pgsql:host=ec2-52-1-115-6.compute-1.amazonaws.com;port=5432;dbname=dfc9kg4tdm8436;user=wimolppypfmrfd;password=45bdbcb28245bfb01ce99e2a525bdab01b81e7aa922696c14984d800fcf9071b");
 			pg_set_client_encoding($conn, "UTF8");
 
@@ -19,7 +18,7 @@ class DB {
 				echo("Database servers are having problems: "); //. mysqli_connect_error());
 			} else {
 				 $this->db = $conn;
-				 //echo "ket noi thnh cong";
+				 echo "ket noi thnh cong";
 			}
 			
 			//if (!$conn->set_charset("utf8")) { } //UTF8
@@ -37,89 +36,9 @@ class DB {
 
 class Get extends DB {
 	
-			
-	
-	function getFullMenu(){
-			$check = pg_query($this->db, "SELECT * FROM menu");		
-				//if ($check->num_rows > 0) {
-					$num = 0;
-					while($row = pg_fetch_assoc($check)) {
-						echo '<label>Menu'.$num.': (<a href="/edit.php?n=1&delID='.$row['id'].'"><u>Delete</u></a>) </label><input type="text" name="n'.$row['id'].'" value="'.$this->getMenuWhereId($row['id']).'"/><p>';
-						$num++;
-					}					
-				//}				
-		}
-	function getMenu(){
-			//$result = pg_query($conn, 'SELECT * FROM menu');
-			$check = pg_query($this->db, "SELECT * FROM menu");	
-				//if(pg_num_rows($check) > 0) {
-					$num = 0;
-					while($row = pg_fetch_assoc($check)) {
-						echo '<a onClick="choose('.$num.');">'.$row['name'].'</a>';
-						$num++;
-					}					
-				//}				
-		}
-	function getMenuWhereId($id){
-			$check = pg_query($this->db,"SELECT * FROM menu WHERE id='$id'");	
-				//if ($check->num_rows > 0) {
-					$row = pg_fetch_assoc($check);
-					return $row['name'];				
-				//}				
-		}
-	function getContent($id){
-			$check = pg_query($this->db,"SELECT * FROM menu WHERE id='$id'");	
-				//if ($check->num_rows > 0) {
-					$row = pg_fetch_assoc($check);
-					return addslashes($row['content']);				
-				//}				
-		}
-		function getFullEditContent(){
-			$check = pg_query($this->db,"SELECT * FROM menu");	
-				//if ($check->num_rows > 0) {
-					while($row = pg_fetch_assoc($check)) {
-						echo '<label>'.$this->getMenuWhereId($row['id']).': </label><br><textarea rows="2" type="text" name="n'.$row['id'].'" >'.$this->getContent($row['id']).'</textarea><p>';			
-					}
-				//}				
-		}
-	function getFullContent() {
-		$check = pg_query($this->db,"SELECT * FROM menu");	
-				//if ($check->num_rows > 0) {
-					$num = 0;
-					while($row = pg_fetch_assoc($check)) {
-						echo 'case '.$num.':
-									content.innerHTML = "'.$this->getContent($row['id']).'";
-								break;';
-						$num++;
-					}					
-				//}	
-	}
 }
 class Post extends DB {
-	function upMenu($id, $name){
-		$query_it = "UPDATE menu SET name='$name' WHERE id='$id'";
-		pg_query($this->db,$query_it);	
-	}
-	function upContent($id, $content){
-		$query_it = "UPDATE menu SET content='$content' WHERE id='$id'";
-		pg_query($this->db,$query_it);	
-	}
-	function delID($id){
-		$query_it = "DELETE FROM menu WHERE id=$id";
-		pg_query($this->db,$query_it);	
-	}
-	function addMenu($name){
-		//$check = pg_query($this->db,"SELECT * FROM menu WHERE name='$name'");	
-				//if ($check->num_rows > 0) {
-				//	echo "Ten menu da ton tai";	
-				//} else {
-					$query_it = "INSERT INTO menu (name, content) VALUES ('$name', '$name')";
-					pg_query($this->db,$query_it);
-					header('Location: /edit.php?n=3');
-					exit;
-				//}				
-			
-	}
+
 	function init(){
 			$query_it = "DROP TABLE IF EXISTS banner;
 			DROP TABLE IF EXISTS banner;
@@ -161,7 +80,7 @@ CREATE TABLE order_sp (
     custid smallint,
     store_id smallint,
     notes character varying(2) DEFAULT NULL::character varying,
-    'time' character varying(10) DEFAULT NULL::character varying,
+    time character varying(10) DEFAULT NULL::character varying,
     status smallint
 );
 CREATE TABLE product (
@@ -270,7 +189,7 @@ INSERT INTO store (store_id, store_name, store_address, store_phone) VALUES
 ";
   
   pg_query($this->db,$q2);	
-			echo "<br>Add data to Table!";
+			echo "<br>Add data to Table!<br>Completed!";
 	}
 	
 	//DROP TABLE IF EXISTS menu;
@@ -279,6 +198,4 @@ INSERT INTO store (store_id, store_name, store_address, store_phone) VALUES
 }
 
 $start = new Post();
-
-
 $start->init();
