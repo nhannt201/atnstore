@@ -266,32 +266,7 @@ INSERT INTO store (store_id, store_name, store_address, store_phone) VALUES
 (1, 'Belfast', '', ''),
 (2, 'Liverpool', '', ''),
 (3, 'Bradford', '', '');
-
-ALTER TABLE banner
-  ADD PRIMARY KEY (id);
-
-
-ALTER TABLE category
-  ADD PRIMARY KEY (id);
-
-ALTER TABLE customer
-  ADD PRIMARY KEY (id);
-
-
-ALTER TABLE order_details
-  ADD PRIMARY KEY (id);
-
-
-ALTER TABLE order_sp
-  ADD PRIMARY KEY (orderID);
-
-
-ALTER TABLE product
-  ADD PRIMARY KEY (productID);
-
-
-ALTER TABLE store
-  ADD PRIMARY KEY (store_id);";
+";
   
   pg_query($this->db,$q2);	
 			echo "<br>Add data to Table!";
