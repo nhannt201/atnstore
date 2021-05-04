@@ -176,7 +176,7 @@ class Get extends DB {
 		$check = pg_query($this->db, "SELECT * FROM product WHERE productid='$id'");	
 			if (pg_num_rows($check) > 0) { 
 				$row = pg_fetch_assoc($check);
-				echo '<!--Card '.$row['name'].'-->
+						echo '<!--Card '.$row['name'].'-->
 						<div class="card" id="'.strtolower($row['name']).'">
 						  <div class="card-header text-center"><h4>'.$row['name'].' toy</h4></div>
 						  <div class="card-body">
@@ -187,30 +187,48 @@ class Get extends DB {
 						echo '<div class="col-sm-4">
 									  <img  src="'.$row['img'].'" class="img-responsive" style="width:100%" alt="'.$row['name'].'"><br><br>';
 						$sale_xl = $row['price'] - ($row['price']*($row['sale']/100));
-						if ($row['sale'] > 0) {
-							echo '<div class="text-center"><h3>Price <del>'.number_format($row['price']).'₫</del></h3>
-							<br><h3>Sale '.$row['sale'].'% '.number_format($sale_xl).'₫</h3></div>';
-						} else {
-							echo '<div class="text-center"><h3>Price '.number_format($row['price']).'₫</h3></div>';
-						}
-							echo "</div>";
-							echo '<div class="col-sm-8">
-									  <div class="alert alert-light border" role="alert">
-										  '.$row['descc'].'
-										</div>
-										<div class="alert alert-secondary" role="alert">
-										  '.nl2br($row['config']).'</div>';
-							if (isset($_SESSION["login_ad"])) {
-								echo '&nbsp;<a href="edit.php?id='.$id.'" target="_blank" class="btn btn-secondary float-right border"">Edit Product</a>';
+							if ($row['sale'] > 0) {
+								echo '<div class="text-center"><h3>Price <del>'.number_format($row['price']).'₫</del></h3>
+								<br><h3>Sale '.$row['sale'].'% '.number_format($sale_xl).'₫</h3></div>';
+							} else {
+								echo '<div class="text-center"><h3>Price '.number_format($row['price']).'₫</h3></div>';
 							}
-										echo '<button  class="btn btn-secondary float-right border" onClick="clickGioHang('.$id.')">Add to cart</button>
-								</div>';
+								echo "</div>";
+								echo '<div class="col-sm-8">
+										  <div class="alert alert-light border" role="alert">
+											  '.$row['descc'].'
+											</div>
+											<div class="alert alert-secondary" role="alert">
+											  '.nl2br($row['config']).'</div>';
+								if (isset($_SESSION["login_ad"])) {
+									echo '&nbsp;<a href="edit.php?id='.$id.'" target="_blank" class="btn btn-secondary float-right border"">Edit Product</a>';
+								}
+											echo '<button  class="btn btn-secondary float-right border" onClick="clickGioHang('.$id.')">Add to cart</button>
+									</div>';
 						//End content
-				echo '			  </div>
+						echo '			  </div>
 							</div>
 						  </div>
-						</div><br>'.$row['category'];		
-				 $this->getBodySimilar(trim($row['category']));
+						</div><br>';//.$row['category'];		
+				// $this->getBodySimilar(trim($row['category']));
+				//Tach cai kia rad2deg
+				$idcate = $row['category'];
+				$nowlong = pg_query($this->db, "SELECT * FROM category WHERE id='$idcate'");	
+				if (pg_num_rows($nowlong) > 0) {
+					$rowNW = pg_fetch_assoc($nowlong);
+						echo '<!--Card '.$rowNW['name'].'-->
+							<div class="card" id="'.strtolower($rowNW['name']).'">
+							  <div class="card-header text-center"><h4>Other '.$rowNW['name'].' products</h4></div>
+							  <div class="card-body">
+							  <div class="container-fluid bg-3">    
+								  <div class="row">
+									 '.$this->getProductRandom($id).'
+								  </div>
+								</div>
+							  </div>
+							</div><br>';				
+				}	
+				//het tach
 						
 			}				
 		}
