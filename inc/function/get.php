@@ -210,7 +210,7 @@ class Get extends DB {
 							</div>
 						  </div>
 						</div><br>'.$row['category'];		
-				 $this->getBodySimilar($row['category']);
+				 $this->getBodySimilar(trim($row['category']));
 						
 			}				
 		}
@@ -987,7 +987,6 @@ class Get extends DB {
 		}
 		
 		function getBodySimilar($idd){
-			echo 'kk';
 			$check = pg_query($this->db, "SELECT * FROM category WHERE id='$idd'");	
 				if (pg_num_rows($check) > 0) {
 					$row = pg_fetch_assoc($check);
@@ -1002,8 +1001,6 @@ class Get extends DB {
 								</div>
 							  </div>
 							</div><br>';				
-				}		else {
-					echo 'no';
 				}		
 		}
 		
