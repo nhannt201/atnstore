@@ -98,11 +98,9 @@ CREATE TABLE store (
     store_name character varying(9) DEFAULT NULL::character varying,
     store_address character varying(11) DEFAULT NULL::character varying,
     store_phone character varying(10) DEFAULT NULL::character varying
-);";
-			pg_query($this->db,$query_it);	
-			echo "Create Table!";
-			
-			$q2 = "INSERT INTO banner (id, name, img, link) VALUES
+);
+
+INSERT INTO banner (id, name, img, link) VALUES
 (1, 'Laugh & Learn® Smart Stages™ Learn With Puppy Walker toy', 'https://i.imgur.com/slEZxGp.png', '/toys/laugh---learn---smart-stages----learn-with-puppy-walker--_5.html'),
 (2, 'Real Wood Adventures™ Bobcat Ridge™', 'https://i.imgur.com/jY1leww.png', '/toys/real-wood-adventures----bobcat-ridge---_10.html'),
 (3, 'Jurassic World Destroy', 'https://i.imgur.com/vQTK3xJ.png', '/toys/jurassic-world-destroy--n-devour-indominus-rex_14.html');
@@ -186,9 +184,14 @@ INSERT INTO store (store_id, store_name, store_address, store_phone) VALUES
 (1, 'Belfast', '', ''),
 (2, 'Liverpool', '', ''),
 (3, 'Bradford', '', '');
+
+
 ";
+			pg_query($this->db,$query_it);	
+			echo "Create Table!";
+
   
-  pg_query($this->db,$q2);	
+
 			echo "<br>Add data to Table!<br>Completed!";
 	}
 	
