@@ -77,7 +77,7 @@ CREATE TABLE order_sp (
     custid smallint,
     store_id smallint,
     notes character varying(2) DEFAULT NULL::character varying,
-    'time' character varying(10) DEFAULT NULL::character varying,
+    time character varying(10) DEFAULT NULL::character varying,
     status smallint
 );
 CREATE TABLE product (
