@@ -33,6 +33,68 @@ class DB {
 
 }
 
+
+class Get extends DB {
+	
+			
+	
+	function getFullMenu(){
+			$check = pg_query($this->db, "SELECT * FROM menu");		
+				//if ($check->num_rows > 0) {
+					$num = 0;
+					while($row = pg_fetch_assoc($check)) {
+						echo '<label>Menu'.$num.': (<a href="/edit.php?n=1&delID='.$row['id'].'"><u>Delete</u></a>) </label><input type="text" name="n'.$row['id'].'" value="'.$this->getMenuWhereId($row['id']).'"/><p>';
+						$num++;
+					}					
+				//}				
+		}
+	function getMenu(){
+			//$result = pg_query($conn, 'SELECT * FROM menu');
+			$check = pg_query($this->db, "SELECT * FROM menu");	
+				//if(pg_num_rows($check) > 0) {
+					$num = 0;
+					while($row = pg_fetch_assoc($check)) {
+						echo '<a onClick="choose('.$num.');">'.$row['name'].'</a>';
+						$num++;
+					}					
+				//}				
+		}
+	function getMenuWhereId($id){
+			$check = pg_query($this->db,"SELECT * FROM menu WHERE id='$id'");	
+				//if ($check->num_rows > 0) {
+					$row = pg_fetch_assoc($check);
+					return $row['name'];				
+				//}				
+		}
+	function getContent($id){
+			$check = pg_query($this->db,"SELECT * FROM menu WHERE id='$id'");	
+				//if ($check->num_rows > 0) {
+					$row = pg_fetch_assoc($check);
+					return addslashes($row['content']);				
+				//}				
+		}
+		function getFullEditContent(){
+			$check = pg_query($this->db,"SELECT * FROM menu");	
+				//if ($check->num_rows > 0) {
+					while($row = pg_fetch_assoc($check)) {
+						echo '<label>'.$this->getMenuWhereId($row['id']).': </label><br><textarea rows="2" type="text" name="n'.$row['id'].'" >'.$this->getContent($row['id']).'</textarea><p>';			
+					}
+				//}				
+		}
+	function getFullContent() {
+		$check = pg_query($this->db,"SELECT * FROM menu");	
+				//if ($check->num_rows > 0) {
+					$num = 0;
+					while($row = pg_fetch_assoc($check)) {
+						echo 'case '.$num.':
+									content.innerHTML = "'.$this->getContent($row['id']).'";
+								break;';
+						$num++;
+					}					
+				//}	
+	}
+}
+
 class Post extends DB {
 	function upMenu($id, $name){
 		$query_it = "UPDATE menu SET name='$name' WHERE id='$id'";
@@ -70,23 +132,23 @@ class Post extends DB {
 			
 CREATE TABLE banner (
     id SERIAL PRIMARY KEY,
-    name character varying(56) DEFAULT NULL::character varying,
-    img character varying(31) DEFAULT NULL::character varying,
-    link character varying(86) DEFAULT NULL::character varying
+    name TEXT NOT NULL,
+    img TEXT NOT NULL,
+    link TEXT NOT NULL
 );
 CREATE TABLE category (
     id SERIAL PRIMARY KEY,
-    name character varying(14) DEFAULT NULL::character varying
+    name TEXT NOT NULL
 );
 CREATE TABLE customer (
     id SERIAL PRIMARY KEY,
     youare smallint,
-    fullname character varying(17) DEFAULT NULL::character varying,
-    email character varying(24) DEFAULT NULL::character varying,
+    fullname TEXT NOT NULL,
+    email TEXT NOT NULL,
     telephone bigint,
-    address character varying(58) DEFAULT NULL::character varying,
-    password character varying(32) DEFAULT NULL::character varying,
-    cartnow character varying(2) DEFAULT NULL::character varying
+    address TEXT NOT NULL,
+    password TEXT NOT NULL,
+    cartnow TEXT NOT NULL
 );
 CREATE TABLE order_details (
     id SERIAL PRIMARY KEY,
@@ -98,25 +160,25 @@ CREATE TABLE order_sp (
     orderid SERIAL PRIMARY KEY,
     custid smallint,
     store_id smallint,
-    notes character varying(2) DEFAULT NULL::character varying,
-    'time' character varying(10) DEFAULT NULL::character varying,
+    notes TEXT NOT NULL,
+    time TEXT NOT NULL,
     status smallint
 );
 CREATE TABLE product (
     productid SERIAL PRIMARY KEY,
     category smallint,
-    name character varying(63) DEFAULT NULL::character varying,
+    name TEXT NOT NULL,
     price integer,
-    img character varying(31) DEFAULT NULL::character varying,
-    descc character varying(350) DEFAULT NULL::character varying,
-    config character varying(1000) DEFAULT NULL::character varying,
+    img TEXT NOT NULL,
+    descc TEXT NOT NULL,
+    config TEXT NOT NULL,
     sale smallint
 );
 CREATE TABLE store (
     store_id SERIAL PRIMARY KEY,
-    store_name character varying(9) DEFAULT NULL::character varying,
-    store_address character varying(11) DEFAULT NULL::character varying,
-    store_phone character varying(10) DEFAULT NULL::character varying
+    store_name TEXT NOT NULL,
+    store_address TEXT NOT NULL,
+    store_phone TEXT NOT NULL
 );";
 			pg_query($this->db,$query_it);	
 			echo "Create Table!";
