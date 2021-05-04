@@ -293,9 +293,10 @@ ALTER TABLE product
 
 ALTER TABLE store
   ADD PRIMARY KEY (store_id);";
-	}
-	pg_query($this->db,$q2);	
+  pg_query($this->db,$q2);	
 			echo "<br>Add data to Table!";
+	}
+	
 	//DROP TABLE IF EXISTS menu;
 	//
 	
