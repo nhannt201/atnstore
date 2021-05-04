@@ -34,12 +34,10 @@ class DB {
 }
 
 
-class Get extends DB {
-	
-}
+
 class Post extends DB {
 
-	function init(){
+	function init() {
 			$query_it = "DROP TABLE IF EXISTS banner;
 			DROP TABLE IF EXISTS banner;
 			DROP TABLE IF EXISTS category;
