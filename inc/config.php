@@ -22,7 +22,7 @@ class DB {
 				echo("Database servers are having problems: "); //. mysqli_connect_error());
 			} else {
 				 $this->db = $conn;
-				 //echo "ket noi thnh cong";
+				 echo "ket noi thnh cong";
 			}
 			
 			//if (!$conn->set_charset("utf8")) { } //UTF8

@@ -1,126 +1,11 @@
 <?php
-class DB {
 
-	private $charset = "utf8";
-	public function __construct(){
-		//if(!isset($_SESSION)) {
-			//session_set_cookie_params(31536000,"/");
-			//session_start();
-		//}
-		if(!isset($this->db)){
-			//$t=time();
-			//$conn = mysqli_connect($this->hostname, $this->username, $this->password,$this->database);
-			$conn = pg_connect("host=ec2-54-167-152-185.compute-1.amazonaws.com port=5432 dbname=dcqa0np5l3i67k user=ecqsxulgbhyxbt password=5085b01e99638c8cccd7b748f8d78e18e4cedfd5c923e169b21ba5f101abceb1");
+			$conn = pg_connect("host=ec2-54-146-73-98.compute-1.amazonaws.com port=5432 dbname=d9em16ehhf5pme user=wofdatlexxslwy password=1666c34bee3841c53bfd8512e9a871179c3d7fd9beb920690162b79060bc7055");
 			//new PDO("pgsql:host=ec2-52-1-115-6.compute-1.amazonaws.com;port=5432;dbname=dfc9kg4tdm8436;user=wimolppypfmrfd;password=45bdbcb28245bfb01ce99e2a525bdab01b81e7aa922696c14984d800fcf9071b");
 			pg_set_client_encoding($conn, "UTF8");
 
-			if (!$conn) {
-				echo("Database servers are having problems: "); //. mysqli_connect_error());
-			} else {
-				 $this->db = $conn;
-				 //echo "ket noi thnh cong";
-			}
-			
-			//if (!$conn->set_charset("utf8")) { } //UTF8
-
-			date_default_timezone_set('Asia/Ho_Chi_Minh');
-
-			if (date_default_timezone_get()) {
-			  //  echo 'date_default_timezone_set: ' . date_default_timezone_get() . '';
-			}
-		}
-	}
-
-}
-
-
-class Get extends DB {
-	
-			
-	
-	function getFullMenu(){
-			$check = pg_query($this->db, "SELECT * FROM menu");		
-				//if ($check->num_rows > 0) {
-					$num = 0;
-					while($row = pg_fetch_assoc($check)) {
-						echo '<label>Menu'.$num.': (<a href="/edit.php?n=1&delID='.$row['id'].'"><u>Delete</u></a>) </label><input type="text" name="n'.$row['id'].'" value="'.$this->getMenuWhereId($row['id']).'"/><p>';
-						$num++;
-					}					
-				//}				
-		}
-	function getMenu(){
-			//$result = pg_query($conn, 'SELECT * FROM menu');
-			$check = pg_query($this->db, "SELECT * FROM menu");	
-				//if(pg_num_rows($check) > 0) {
-					$num = 0;
-					while($row = pg_fetch_assoc($check)) {
-						echo '<a onClick="choose('.$num.');">'.$row['name'].'</a>';
-						$num++;
-					}					
-				//}				
-		}
-	function getMenuWhereId($id){
-			$check = pg_query($this->db,"SELECT * FROM menu WHERE id='$id'");	
-				//if ($check->num_rows > 0) {
-					$row = pg_fetch_assoc($check);
-					return $row['name'];				
-				//}				
-		}
-	function getContent($id){
-			$check = pg_query($this->db,"SELECT * FROM menu WHERE id='$id'");	
-				//if ($check->num_rows > 0) {
-					$row = pg_fetch_assoc($check);
-					return addslashes($row['content']);				
-				//}				
-		}
-		function getFullEditContent(){
-			$check = pg_query($this->db,"SELECT * FROM menu");	
-				//if ($check->num_rows > 0) {
-					while($row = pg_fetch_assoc($check)) {
-						echo '<label>'.$this->getMenuWhereId($row['id']).': </label><br><textarea rows="2" type="text" name="n'.$row['id'].'" >'.$this->getContent($row['id']).'</textarea><p>';			
-					}
-				//}				
-		}
-	function getFullContent() {
-		$check = pg_query($this->db,"SELECT * FROM menu");	
-				//if ($check->num_rows > 0) {
-					$num = 0;
-					while($row = pg_fetch_assoc($check)) {
-						echo 'case '.$num.':
-									content.innerHTML = "'.$this->getContent($row['id']).'";
-								break;';
-						$num++;
-					}					
-				//}	
-	}
-}
-class Post extends DB {
-	function upMenu($id, $name){
-		$query_it = "UPDATE menu SET name='$name' WHERE id='$id'";
-		pg_query($this->db,$query_it);	
-	}
-	function upContent($id, $content){
-		$query_it = "UPDATE menu SET content='$content' WHERE id='$id'";
-		pg_query($this->db,$query_it);	
-	}
-	function delID($id){
-		$query_it = "DELETE FROM menu WHERE id=$id";
-		pg_query($this->db,$query_it);	
-	}
-	function addMenu($name){
-		//$check = pg_query($this->db,"SELECT * FROM menu WHERE name='$name'");	
-				//if ($check->num_rows > 0) {
-				//	echo "Ten menu da ton tai";	
-				//} else {
-					$query_it = "INSERT INTO menu (name, content) VALUES ('$name', '$name')";
-					pg_query($this->db,$query_it);
-					header('Location: /edit.php?n=3');
-					exit;
-				//}				
-			
-	}
-	function init(){
-			$query_it = "DROP TABLE IF EXISTS banner;
+		
+		/**	$query_it = "DROP TABLE IF EXISTS banner;
 			DROP TABLE IF EXISTS banner;
 			DROP TABLE IF EXISTS category;
 			DROP TABLE IF EXISTS customer;
@@ -180,89 +65,12 @@ CREATE TABLE store (
     store_phone character varying(10) DEFAULT NULL::character varying
 );
 
-
-ALTER TABLE banner
-  ADD PRIMARY KEY (id);
-
-
-ALTER TABLE category
-  ADD PRIMARY KEY (id);
-
-ALTER TABLE customer
-  ADD PRIMARY KEY (id);
-
-
-ALTER TABLE order_details
-  ADD PRIMARY KEY (id);
-
-
-ALTER TABLE order_sp
-  ADD PRIMARY KEY (orderID);
-
-
-ALTER TABLE product
-  ADD PRIMARY KEY (productID);
-
-
-ALTER TABLE store
-  ADD PRIMARY KEY (store_id);
   
 ";
 			pg_query($this->db,$query_it);	
-			echo "Create Table!";
+			echo "Create Table!";**/
 			
-			$q2 = "INSERT INTO banner (id, name, img, link) VALUES
-(1, 'Laugh & Learn® Smart Stages™ Learn With Puppy Walker toy', 'https://i.imgur.com/slEZxGp.png', '/toys/laugh---learn---smart-stages----learn-with-puppy-walker--_5.html'),
-(2, 'Real Wood Adventures™ Bobcat Ridge™', 'https://i.imgur.com/jY1leww.png', '/toys/real-wood-adventures----bobcat-ridge---_10.html'),
-(3, 'Jurassic World Destroy', 'https://i.imgur.com/vQTK3xJ.png', '/toys/jurassic-world-destroy--n-devour-indominus-rex_14.html');
-
-INSERT INTO category (id, name) VALUES
-(1, 'Fisher Price'),
-(2, 'Little Tikes'),
-(3, 'Mattel'),
-(4, 'Summer Infant'),
-(5, 'Lego'),
-(6, 'Intex'),
-(7, 'Fischertechnik');
-
-INSERT INTO customer (id, youare, fullname, email, telephone, address, password, cartnow) VALUES
-(1, 1, 'Nhan Trung Nguyen', 'trungnhan21.12@gmail.com', '0907375645', 'Dang Thuy Tram Street, Ward 13, Binh Thanh District\r\n20/28', '0efa80c2712d2821d166bc6fc1917dbe', '[]');
-
-
-INSERT INTO order_details (id, orderID, productID, qty) VALUES
-(1, '1', 14, 2),
-(2, '1', 11, 1),
-(3, '2', 3, 1),
-(4, '2', 4, 1),
-(5, '2', 8, 1),
-(6, '2', 6, 1),
-(7, '3', 8, 1),
-(8, '3', 10, 1),
-(9, '4', 2, 1),
-(10, '4', 4, 1),
-(11, '4', 1, 1),
-(12, '5', 9, 1),
-(13, '5', 6, 1),
-(14, '6', 5, 1),
-(15, '6', 2, 1),
-(16, '6', 3, 1),
-(17, '6', 11, 1),
-(18, '7', 10, 1),
-(19, '8', 4, 1),
-(21, '10', 4, 1);
-
-INSERT INTO order_sp (orderID, custID, store_id, notes, time, status) VALUES
-(1, 1, 2, '', '23-04-2021', 1),
-(2, 1, 2, '', '20-04-2021', 0),
-(3, 1, 0, '', '21-04-2021', 1),
-(4, 1, 1, '', '22-04-2021', 1),
-(5, 1, 0, '', '23-04-2021', 0),
-(6, 1, 1, '', '04-05-2021', 0),
-(7, 1, 0, '', '04-05-2021', 1),
-(8, 1, 1, '', '04-05-2021', 0),
-(10, 1, 0, 'ok', '04-05-2021', 0);
-
-
+			$q2 = "
 INSERT INTO product (productID, category, name, price, img, descc, config, sale) VALUES
 (1, 1, 'Calming Clouds™ Mobile &amp; Soother', 500000, 'https://i.imgur.com/wKSwYzD.png', 'Get little ones excited for their future rides to school with the Little People® Sit with Me School Bus! Get the fun started by pressing the Discovery Button to flip open the stop sign and pop open the door to let on passengers.', 'Get little ones excited for their future rides to school with the Little People® Sit with Me School Bus! Get the fun started by pressing the Discovery Button to flip open the stop sign and pop open the door to let on passengers.Get little ones excited for their future rides to school with the Little People® Sit with Me School Bus! Get the fun started by pressing the Discovery Button to flip open the stop sign and pop open the door to let on passengers.Get little ones excited for their future rid', 0),
 (2, 1, 'Fisher-Price® Twinkle &amp; Cuddle Cloud Soother', 725000, 'https://i.imgur.com/AguJUYK.png', 'The Twinkle &amp; Cuddle Cloud Soother from Fisher-Price is a cuddly friend that helps comfort and soothe your baby as they grow from the crib to a big-kid bed. ', 'The Twinkle &amp; Cuddle Cloud Soother from Fisher-Price is a cuddly friend that helps comfort and soothe your baby as they grow from the crib to a big-kid bed. The cloud easily attaches to most cribs and features the Ready, Settle, Sleep™ playlist of gentle music and soft white noise, which syncs with the multicolor light show to set a soothing scene for sweet dreams. And since every baby is different, you can easily customize the music, soothing nature sounds, volume, and light color to find the combination that works best for your little snoozer! As your baby grows, this snuggly soother becomes a comforting take-along pal.', 2),
@@ -291,24 +99,8 @@ INSERT INTO product (productID, category, name, price, img, descc, config, sale)
 (25, 5, 'Harry Potter & Hermione Granger™', 2767269, 'https://i.imgur.com/xBgTIDH.png', 'Make a BIG impression on any young witch or wizard with the super-sized LEGO® Harry Potter™: Harry Potter & Hermione Granger™ (76393).', 'Make a BIG impression on any young witch or wizard with the super-sized LEGO® Harry Potter™: Harry Potter & Hermione Granger™ (76393).\r\n\r\nLarge-scale, iconic figures\r\nKids can maximize the magical fun with these brick-built Harry Potter and Hermione Granger models. Both figures stand 10 in. (26 cm) tall and possess all the adjustability of the smaller LEGO minifigures: movable hand, leg and hip joints, plus a rotatable head for the Harry Potter figure. Harry has a removable, fabric robe and both models carry brick-built wands to help inspire magical stories for kids to play out. When the action stops, kids can put the 2 Hogwarts™ friends into a pose to create an amazing ‘Harry and Hermione’ display for their room. Individual sets of building instructions allow 2 builders to share the fun together.', 3);
 
 
-
-INSERT INTO store (store_id, store_name, store_address, store_phone) VALUES
-(0, 'Leeds', 'Los Angeles', '5765734552'),
-(1, 'Belfast', '', ''),
-(2, 'Liverpool', '', ''),
-(3, 'Bradford', '', '');
 ";
   
-  pg_query($this->db,$q2);	
+			pg_query($conn,$q2);	
 			echo "<br>Add data to Table!";
-	}
 	
-	//DROP TABLE IF EXISTS menu;
-	//
-	
-}
-
-$start = new Post();
-
-
-$start->init();
