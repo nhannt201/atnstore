@@ -18,16 +18,16 @@ class DB {
 				echo("Database servers are having problems: "); //. mysqli_connect_error());
 			} else {
 				 $this->db = $conn;
-				 echo "ket noi thnh cong";
+				// echo "ket noi thnh cong";
 			}
 			
 			//if (!$conn->set_charset("utf8")) { } //UTF8
 
-			date_default_timezone_set('Asia/Ho_Chi_Minh');
+			//date_default_timezone_set('Asia/Ho_Chi_Minh');
 
-			if (date_default_timezone_get()) {
+			//if (date_default_timezone_get()) {
 			  //  echo 'date_default_timezone_set: ' . date_default_timezone_get() . '';
-			}
+			//}
 		}
 	}
 
@@ -35,9 +35,8 @@ class DB {
 
 
 class Post extends DB {
-
-	function init(){
-			$query_it = "DROP TABLE IF EXISTS banner;
+/**
+DROP TABLE IF EXISTS banner;
 			DROP TABLE IF EXISTS banner;
 			DROP TABLE IF EXISTS category;
 			DROP TABLE IF EXISTS customer;
@@ -45,6 +44,9 @@ class Post extends DB {
 			DROP TABLE IF EXISTS order_sp;
 			DROP TABLE IF EXISTS product;
 			DROP TABLE IF EXISTS store;
+**/
+	function init(){
+			$query_it = "
 			
 CREATE TABLE banner (
     id SERIAL PRIMARY KEY,
