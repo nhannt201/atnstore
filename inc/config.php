@@ -14,7 +14,7 @@ class DB {
 		if(!isset($this->db)){
 			$t=time();
 			//$conn = mysqli_connect($this->hostname, $this->username, $this->password,$this->database);
-			$conn = pg_connect("host=$hostname port=5432 dbname=$database user=$username password=$password");
+			$conn = pg_connect("host=".$hostname." port=5432 dbname=".$database." user=".$username." password=".$password);
 			pg_set_client_encoding($conn, "UTF8");
 
 			if (!$conn) {
