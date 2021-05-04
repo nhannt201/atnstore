@@ -1,35 +1,35 @@
 <?php
 class Get extends DB {
 		function getCM(){
-			$check = $this->db->query("SELECT * FROM category");	
-				if ($check->num_rows > 0) { 
-					while($row = $check->fetch_assoc()) {
+			$check = pg_query($this->db, "SELECT * FROM category");	
+				if (pg_num_rows($check) > 0) { 
+					while($row = pg_fetch_assoc($check)) {
 						echo '<a class="p-2 text-muted" href="/brand/'.strtolower(str_replace(" ", "+",$row['name'])).'_'.$row['id'].'.html">'.$row['name'].'</a>';
 					}					
 				}				
 		}
 		function getNameCM($id){
-			$check = $this->db->query("SELECT * FROM category WHERE id='$id'");	
-				if ($check->num_rows > 0) { 
-					$row = $check->fetch_assoc();
+			$check = pg_query($this->db, "SELECT * FROM category WHERE id='$id'");	
+				if (pg_num_rows($check) > 0) { 
+					$row = pg_fetch_assoc($check);
 					return $row['name'];				
 				}				
 		}
 		
 		function getCMForm(){
-			$check = $this->db->query("SELECT * FROM category");	
-				if ($check->num_rows > 0) { 
-					while($row = $check->fetch_assoc()) {
+			$check = pg_query($this->db, "SELECT * FROM category");	
+				if (pg_num_rows($check) > 0) { 
+					while($row = pg_fetch_assoc($check)) {
 						echo '<option value="'.($row['id']).'">'.$row['name'].'</option>';
 					}					
 				}				
 		}
 		
 		function getBN(){
-			$check = $this->db->query("SELECT * FROM banner ORDER BY id DESC LIMIT 3");	
-				if ($check->num_rows > 0) { 
+			$check = pg_query($this->db, "SELECT * FROM banner ORDER BY id DESC LIMIT 3");	
+				if (pg_num_rows($check) > 0) { 
 				$num = 0;
-					while($row = $check->fetch_assoc()) {
+					while($row = pg_fetch_assoc($check)) {
 						if ($num == 0) {
 							echo '<div class="carousel-item active">
 								  <a href = "'.$row['link'].'"><img src="'.$row['img'].'" alt="'.$row['name'].'" width="1100" height="500"></a>
@@ -45,10 +45,10 @@ class Get extends DB {
 		}
 		
 		function getProduct($id){
-			$check = $this->db->query("SELECT * FROM product WHERE category='$id' ORDER BY productID DESC LIMIT 4");	
-				if ($check->num_rows > 0) { 
+			$check = pg_query($this->db, "SELECT * FROM product WHERE category='$id' ORDER BY productID DESC LIMIT 4");	
+				if (pg_num_rows($check) > 0) { 
 					$product = "";
-					while($row = $check->fetch_assoc()) {
+					while($row = pg_fetch_assoc($check)) {
 						$name_url = preg_replace('/[^a-zA-Z0-9_%\[().\]\\/-]/s', '-', $row['name']);
 						//Xu li rut gon mo ta
 						$xuli_mt = explode(" ", $row['descc']); 
@@ -85,10 +85,10 @@ class Get extends DB {
 		}
 		
 		function getProductRandom($id){
-			$check = $this->db->query("SELECT * FROM product WHERE category='$id' order by RAND() LIMIT 4");	
-				if ($check->num_rows > 0) { 
+			$check = pg_query($this->db, "SELECT * FROM product WHERE category='$id' order by RAND() LIMIT 4");	
+				if (pg_num_rows($check) > 0) { 
 					$product = "";
-					while($row = $check->fetch_assoc()) {
+					while($row = pg_fetch_assoc($check)) {
 						$name_url = preg_replace('/[^a-zA-Z0-9_%\[().\]\\/-]/s', '-', $row['name']);
 						//Xu li rut gon mo ta
 						$xuli_mt = explode(" ", $row['descc']); 
@@ -125,10 +125,10 @@ class Get extends DB {
 		}
 		
 		function getProductLike($id){
-			$check = $this->db->query("SELECT * FROM product WHERE productID='$id'");	
-				if ($check->num_rows > 0) { 
+			$check = pg_query($this->db, "SELECT * FROM product WHERE productID='$id'");	
+				if (pg_num_rows($check) > 0) { 
 					$product = "";
-					$row = $check->fetch_assoc();
+					$row = pg_fetch_assoc($check);
 						$name_url = preg_replace('/[^a-zA-Z0-9_%\[().\]\\/-]/s', '-', $row['name']);
 						//Xu li rut gon mo ta
 						$xuli_mt = explode(" ", $row['descc']); 
@@ -166,16 +166,16 @@ class Get extends DB {
 		}
 		
 		function getProductName($id){
-			$check = $this->db->query("SELECT * FROM product WHERE productID='$id'");	
-				if ($check->num_rows > 0) { 
-					$row = $check->fetch_assoc();
+			$check = pg_query($this->db, "SELECT * FROM product WHERE productID='$id'");	
+				if (pg_num_rows($check) > 0) { 
+					$row = pg_fetch_assoc($check);
 					return $row['name'];		
 				}				
 		}
 		function getProductInfo($id){
-		$check = $this->db->query("SELECT * FROM product WHERE productID='$id'");	
-			if ($check->num_rows > 0) { 
-				$row = $check->fetch_assoc();
+		$check = pg_query($this->db, "SELECT * FROM product WHERE productID='$id'");	
+			if (pg_num_rows($check) > 0) { 
+				$row = pg_fetch_assoc($check);
 				echo '<!--Card '.$row['name'].'-->
 						<div class="card" id="'.strtolower($row['name']).'">
 						  <div class="card-header text-center"><h4>'.$row['name'].' toy</h4></div>
@@ -216,10 +216,10 @@ class Get extends DB {
 		}
 	
 		function getProductFull($id){
-			$check = $this->db->query("SELECT * FROM product WHERE category='$id' ORDER BY productID DESC LIMIT 20");	
-				if ($check->num_rows > 0) { 
+			$check = pg_query($this->db, "SELECT * FROM product WHERE category='$id' ORDER BY productID DESC LIMIT 20");	
+				if (pg_num_rows($check) > 0) { 
 					$product = "";
-					while($row = $check->fetch_assoc()) {
+					while($row = pg_fetch_assoc($check)) {
 						//name sang url
 						$name_url = preg_replace('/[^a-zA-Z0-9_%\[().\]\\/-]/s', '-', $row['name']);
 						//Xu li rut gon mo ta
@@ -261,10 +261,10 @@ class Get extends DB {
 		}
 		
 		function getAdminPost(){
-			$check = $this->db->query("SELECT * FROM product ORDER BY productID DESC LIMIT 20");	
-				if ($check->num_rows > 0) { 
+			$check = pg_query($this->db, "SELECT * FROM product ORDER BY productID DESC LIMIT 20");	
+				if (pg_num_rows($check) > 0) { 
 					$num = 1;
-					while($row = $check->fetch_assoc()) {
+					while($row = pg_fetch_assoc($check)) {
 						//name sang url
 						//$name_url = preg_replace('/[^a-zA-Z0-9_%\[().\]\\/-]/s', '-', $row['name']);
 						if ($row['sale'] > 0) {
@@ -296,9 +296,9 @@ class Get extends DB {
 		}
 		
 		function getBranchName($id){
-			$check = $this->db->query("SELECT * FROM store WHERE store_id='$id'");	
-				if ($check->num_rows > 0) {
-					$row = $check->fetch_assoc();
+			$check = pg_query($this->db, "SELECT * FROM store WHERE store_id='$id'");	
+				if (pg_num_rows($check) > 0) {
+					$row = pg_fetch_assoc($check);
 						return $row['store_name'];			
 				}				
 		}
@@ -323,12 +323,12 @@ class Get extends DB {
 				}
 			}
 				
-			$check = $this->db->query($qrr);	
-				if ($check->num_rows > 0) { 
-					while($row = $check->fetch_assoc()) {
+			$check = pg_query($this->db, $qrr);	
+				if (pg_num_rows($check) > 0) { 
+					while($row = pg_fetch_assoc($check)) {
 						$id_us = $row['custID'];
 						$order_id = $row['orderID'];
-						$get_us = $this->db->query("SELECT * FROM customer WHERE id='$id_us'");	
+						$get_us = pg_query($this->db, "SELECT * FROM customer WHERE id='$id_us'");	
 						$row2 = $get_us->fetch_assoc();
 						$danhxung = "";
 						if ($row2['youare'] == 0){
@@ -349,7 +349,7 @@ class Get extends DB {
 									//	foreach ($getJS33 as $kk => $vv) { //chi lay $v, lay so luong san pham.
 									//		$soluong_total += $vv;
 									//	}
-								$get_list_sp = $this->db->query("SELECT * FROM order_details WHERE orderID='$order_id'");
+								$get_list_sp = pg_query($this->db, "SELECT * FROM order_details WHERE orderID='$order_id'");
 								//Lay so luong san pham
 								while($row_get = $get_list_sp->fetch_assoc()) {
 									$soluong_total += $row_get['qty'];
@@ -382,12 +382,12 @@ class Get extends DB {
 		
 		function getAdminOrderFollowReport($iddd){
 			$qrr = "SELECT * FROM order_sp WHERE orderID = '$iddd' LIMIT 20";
-			$check = $this->db->query($qrr);	
-				if ($check->num_rows > 0) { 
-					while($row = $check->fetch_assoc()) {
+			$check = pg_query($this->db, $qrr);	
+				if (pg_num_rows($check) > 0) { 
+					while($row = pg_fetch_assoc($check)) {
 						$id_us = $row['custID'];
 						$order_id = $row['orderID'];
-						$get_us = $this->db->query("SELECT * FROM customer WHERE id='$id_us'");	
+						$get_us = pg_query($this->db, "SELECT * FROM customer WHERE id='$id_us'");	
 						$row2 = $get_us->fetch_assoc();
 						$danhxung = "";
 						if ($row2['youare'] == 0){
@@ -401,7 +401,7 @@ class Get extends DB {
 							$status = '<div class="alert alert-success"><strong>Completed</strong></div>';
 						}
 							$soluong_total=0;
-								$get_list_sp = $this->db->query("SELECT * FROM order_details WHERE orderID='$order_id'");
+								$get_list_sp = pg_query($this->db, "SELECT * FROM order_details WHERE orderID='$order_id'");
 								//Lay so luong san pham
 								while($row_get = $get_list_sp->fetch_assoc()) {
 									$soluong_total += $row_get['qty'];
@@ -433,18 +433,18 @@ class Get extends DB {
 		}
 		
 		function getPriceOrder($id_order){
-								$check = $this->db->query("SELECT * FROM order_details WHERE orderID='$id_order'");	
+								$check = pg_query($this->db, "SELECT * FROM order_details WHERE orderID='$id_order'");	
 								$thanhtien = 0;	
-								if ($check->num_rows > 0) { 
-									//$total_sp = $check->num_rows;							
-									while($row = $check->fetch_assoc()) {
+								if (pg_num_rows($check) > 0) { 
+									//$total_sp = pg_num_rows($check);							
+									while($row = pg_fetch_assoc($check)) {
 										$soluong_qty = $row['qty'];
 										//$getLS = json_decode($row['list_sp'], true);	
 										
 										$productID = $row['productID'];
 												//lay gia tien
 													//foreach($getLS as $key2 => $soluong)  { 
-														$check2 = $this->db->query("SELECT * FROM product WHERE productID='$productID'");	
+														$check2 = pg_query($this->db, "SELECT * FROM product WHERE productID='$productID'");	
 														if ($check2->num_rows > 0) { 															
 															while($row2 = $check2->fetch_assoc()) {
 																if ($row2['sale'] > 0) {
@@ -471,8 +471,8 @@ class Get extends DB {
 			//	rsort($_SESSION['order']); //sap xep lai don hang DESC
 			if (isset($_SESSION['user_id'])) {
 				$iddd = $_SESSION['user_id'];
-			//$check = $this->db->query("SELECT * FROM order_sp WHERE custID='$iddd'");	
-			//if ($check->num_rows > 0) { 
+			//$check = pg_query($this->db, "SELECT * FROM order_sp WHERE custID='$iddd'");	
+			//if (pg_num_rows($check) > 0) { 
 				echo '<div class="card">
   <div class="card-header text-center"><h4>Your order</h4></div> <div class="card-body">							<!--table--><div class="table-responsive">
 
@@ -490,10 +490,10 @@ class Get extends DB {
 									  <tbody>';
 					//foreach($_SESSION['order'] as $key => $iddd)  {   
 								//$iddd = $_SESSION['order'][$key];
-								$check = $this->db->query("SELECT * FROM order_sp WHERE custID='$iddd' ORDER BY orderID DESC LIMIT 10");	
-								if ($check->num_rows > 0) { 
+								$check = pg_query($this->db, "SELECT * FROM order_sp WHERE custID='$iddd' ORDER BY orderID DESC LIMIT 10");	
+								if (pg_num_rows($check) > 0) { 
 									
-									while($row = $check->fetch_assoc()) {
+									while($row = pg_fetch_assoc($check)) {
 										$order_id = $row['orderID'];
 										$soluong_total = 0;
 										//name sang url
@@ -502,7 +502,7 @@ class Get extends DB {
 										//foreach($getLS as $masp => $soluong)  {
 										//	$SL_total += $soluong;
 										//}
-										$get_list_sp = $this->db->query("SELECT * FROM order_details WHERE orderID='$order_id'");
+										$get_list_sp = pg_query($this->db, "SELECT * FROM order_details WHERE orderID='$order_id'");
 										//Lay so luong san pham
 										while($row_get = $get_list_sp->fetch_assoc()) {
 											$soluong_total += $row_get['qty'];
@@ -529,12 +529,12 @@ class Get extends DB {
 		}
 		
 		function getViewOrder($id){
-		$check = $this->db->query("SELECT * FROM order_sp WHERE orderID='$id'");	
-			if ($check->num_rows > 0) { 
-				$row = $check->fetch_assoc();
+		$check = pg_query($this->db, "SELECT * FROM order_sp WHERE orderID='$id'");	
+			if (pg_num_rows($check) > 0) { 
+				$row = pg_fetch_assoc($check);
 				$danhxung = "";
 				$id_us = $row['custID'];
-				$get_us = $this->db->query("SELECT * FROM customer WHERE id='$id_us'");	
+				$get_us = pg_query($this->db, "SELECT * FROM customer WHERE id='$id_us'");	
 				//if ($get_us->num_rows > 0) {
 					$row2 = $get_us->fetch_assoc();
 					if ($row2['youare'] == 0) {
@@ -593,7 +593,7 @@ class Get extends DB {
 									  <tbody>';
 									 // $layLIS = json_decode($row['list_sp'], true); code cu
 									  $soluong_total = 0;
-									  $get_list_sp = $this->db->query("SELECT * FROM order_details WHERE orderID='$id'");
+									  $get_list_sp = pg_query($this->db, "SELECT * FROM order_details WHERE orderID='$id'");
 										//Lay so luong san pham
 									//	while($row_get = $get_list_sp->fetch_assoc()) {
 									//		$soluong_total += $row_get['qty'];
@@ -601,7 +601,7 @@ class Get extends DB {
 										//Lay thong tin order
 										while($row_rs = $get_list_sp->fetch_assoc()) {
 											$productID = $row_rs['productID'];
-											$check2 = $this->db->query("SELECT * FROM product WHERE productID='$productID'");	
+											$check2 = pg_query($this->db, "SELECT * FROM product WHERE productID='$productID'");	
 											if ($check2->num_rows > 0) {
 												while($row2 = $check2->fetch_assoc()) {
 														$soluong = $row_rs['qty'];
@@ -722,9 +722,9 @@ class Get extends DB {
 				//$max_cart = count($_SESSION['cart']);
 				foreach($_SESSION['cart'] as $key => $soluong)  {        
 				$iddd = $key;
-				$check = $this->db->query("SELECT * FROM product WHERE productID='$iddd'");	
-					if ($check->num_rows > 0) { 
-						while($row = $check->fetch_assoc()) {
+				$check = pg_query($this->db, "SELECT * FROM product WHERE productID='$iddd'");	
+					if (pg_num_rows($check) > 0) { 
+						while($row = pg_fetch_assoc($check)) {
 							//Cong don tien:
 							$thanhtien += $row['price']*$soluong;
 							
@@ -925,10 +925,10 @@ class Get extends DB {
 		}
 		
 		function getBody(){
-			$check = $this->db->query("SELECT * FROM category LIMIT 5");	
-				if ($check->num_rows > 0) {
+			$check = pg_query($this->db, "SELECT * FROM category LIMIT 5");	
+				if (pg_num_rows($check) > 0) {
 					$num = 1;
-					while($row = $check->fetch_assoc()) {
+					while($row = pg_fetch_assoc($check)) {
 						echo '<!--Card '.$row['name'].'-->
 							<div class="card" id="'.strtolower($row['name']).'">
 							  <div class="card-header text-center"><h4>New '.$row['name'].' toy models</h4></div>
@@ -946,9 +946,9 @@ class Get extends DB {
 		}
 		
 		function getBodyOnly($id){
-			$check = $this->db->query("SELECT * FROM category WHERE id='$id'");	
-				if ($check->num_rows > 0) {
-					$row = $check->fetch_assoc();
+			$check = pg_query($this->db, "SELECT * FROM category WHERE id='$id'");	
+				if (pg_num_rows($check) > 0) {
+					$row = pg_fetch_assoc($check);
 						echo '<!--Card '.$row['name'].'-->
 							<div class="card" id="'.strtolower($row['name']).'">
 							  <div class="card-header text-center"><h4>'.$row['name'].' products currently available on ATN Toy Store</h4></div>
@@ -964,14 +964,14 @@ class Get extends DB {
 		}
 		
 		function getSearch($keyword){
-			$check = $this->db->query("SELECT * FROM product WHERE name LIKE '%$keyword%' LIMIT 20");	
+			$check = pg_query($this->db, "SELECT * FROM product WHERE name LIKE '%$keyword%' LIMIT 20");	
 				echo '<div class="card">
 							  <div class="card-header text-center"><h4>Search results for "'.htmlspecialchars($keyword).'"</h4></div>
 							  <div class="card-body">
 							  <div class="container-fluid bg-3">   <div class="row"> ';
-				if ($check->num_rows > 0) { //Neu tim thay
+				if (pg_num_rows($check) > 0) { //Neu tim thay
 				
-					while($row = $check->fetch_assoc()) {
+					while($row = pg_fetch_assoc($check)) {
 						echo $this->getProductLike($row['productID']);	
 					}			
 								
@@ -987,9 +987,9 @@ class Get extends DB {
 		}
 		
 		function getBodySimilar($id){
-			$check = $this->db->query("SELECT * FROM category WHERE id='$id'");	
-				if ($check->num_rows > 0) {
-					$row = $check->fetch_assoc();
+			$check = pg_query($this->db, "SELECT * FROM category WHERE id='$id'");	
+				if (pg_num_rows($check) > 0) {
+					$row = pg_fetch_assoc($check);
 						echo '<!--Card '.$row['name'].'-->
 							<div class="card" id="'.strtolower($row['name']).'">
 							  <div class="card-header text-center"><h4>Other '.$row['name'].' products</h4></div>
@@ -1006,20 +1006,20 @@ class Get extends DB {
 		
 		
 		function getTrend(){
-			$check = $this->db->query("SELECT * FROM category LIMIT 5");	
-				if ($check->num_rows > 0) {
-					while($row = $check->fetch_assoc()) {
+			$check = pg_query($this->db, "SELECT * FROM category LIMIT 5");	
+				if (pg_num_rows($check) > 0) {
+					while($row = pg_fetch_assoc($check)) {
 						echo '<a href="#'.strtolower($row['name']).'" class="btn btn-primary">'.$row['name'].'</a>';
 					}					
 				}				
 		}
 		
 		function getBranch(){
-			$check = $this->db->query("SELECT * FROM store");	
-				if ($check->num_rows > 0) {
+			$check = pg_query($this->db, "SELECT * FROM store");	
+				if (pg_num_rows($check) > 0) {
 					echo '	<label class="mr-sm-2">Filter by branch:</label>
 						<select  class="form-control mb-2 mr-sm-2" id="chooBB">						';
-					while($row = $check->fetch_assoc()) {
+					while($row = pg_fetch_assoc($check)) {
 						echo '<option value="'.$row['store_id'].'">'.$row['store_name'].'</option>';
 					}		
 					echo '</select>';
@@ -1027,9 +1027,9 @@ class Get extends DB {
 		}
 		
 		function getBranchOnlyOption(){
-			$check = $this->db->query("SELECT * FROM store");	
-				if ($check->num_rows > 0) {
-					while($row = $check->fetch_assoc()) {
+			$check = pg_query($this->db, "SELECT * FROM store");	
+				if (pg_num_rows($check) > 0) {
+					while($row = pg_fetch_assoc($check)) {
 						echo '<option value="'.$row['store_id'].'">'.$row['store_name'].'</option>';
 					}		
 				}				
@@ -1037,9 +1037,9 @@ class Get extends DB {
 		
 		
 	function editProduct($id){
-		$check = $this->db->query("SELECT * FROM product WHERE productID='$id'");	
-			if ($check->num_rows > 0) { 
-				$row = $check->fetch_assoc();
+		$check = pg_query($this->db, "SELECT * FROM product WHERE productID='$id'");	
+			if (pg_num_rows($check) > 0) { 
+				$row = pg_fetch_assoc($check);
 				echo '<form action="/edit?id='.$id.'" method="post">
 								<label class="mr-sm-2">Brand:</label>
 								  <select name="category" class="form-control mb-2 mr-sm-2">
@@ -1075,11 +1075,11 @@ class Get extends DB {
 	}
 	
 	function editBanner(){
-		$check = $this->db->query("SELECT * FROM banner");	
-			if ($check->num_rows > 0) { 
+		$check = pg_query($this->db, "SELECT * FROM banner");	
+			if (pg_num_rows($check) > 0) { 
 			echo '<form action="" method="post">';
 			$num =1;
-				while($row = $check->fetch_assoc()) {
+				while($row = pg_fetch_assoc($check)) {
 												
 					echo '		
 								  <h4>Banner '.$num.'</h4><hr>
@@ -1102,9 +1102,9 @@ class Get extends DB {
 	}
 	
 	function getUserInfo($id, $info){
-			$check = $this->db->query("SELECT * FROM customer WHERE id='$id'");	
-				if ($check->num_rows > 0) {
-					$row = $check->fetch_assoc();
+			$check = pg_query($this->db, "SELECT * FROM customer WHERE id='$id'");	
+				if (pg_num_rows($check) > 0) {
+					$row = pg_fetch_assoc($check);
 					switch ($info) {
 						case 1:
 						return $row['youare'];
@@ -1245,13 +1245,13 @@ class Get extends DB {
 			$date_today = date("d-m-Y");
 			if ($type == 0) { //today current day
 			if ($chinhanh==-1) {
-				$check = $this->db->query("SELECT * FROM order_sp WHERE time='$date_today'");	
+				$check = pg_query($this->db, "SELECT * FROM order_sp WHERE time='$date_today'");	
 			} else {
-				$check = $this->db->query("SELECT * FROM order_sp WHERE time='$date_today' and store_id='$chinhanh'");	
+				$check = pg_query($this->db, "SELECT * FROM order_sp WHERE time='$date_today' and store_id='$chinhanh'");	
 			}
-					if ($check->num_rows > 0) {
+					if (pg_num_rows($check) > 0) {
 						$c =0;
-						while($row = $check->fetch_assoc()) {
+						while($row = pg_fetch_assoc($check)) {
 							$main_date = $row['time'];
 								if ($main_date==$date_today) {
 									$c +=1;
@@ -1264,13 +1264,13 @@ class Get extends DB {
 					}	
 			if ($type == 1) { //a to b
 				if ($chinhanh==-1) {
-					$check = $this->db->query("SELECT * FROM order_sp WHERE time BETWEEN '$a' AND '$b'");
+					$check = pg_query($this->db, "SELECT * FROM order_sp WHERE time BETWEEN '$a' AND '$b'");
 				} else {
-					$check = $this->db->query("SELECT * FROM order_sp WHERE time BETWEEN '$a' AND '$b' and store_id='$chinhanh'");	
+					$check = pg_query($this->db, "SELECT * FROM order_sp WHERE time BETWEEN '$a' AND '$b' and store_id='$chinhanh'");	
 				}
-					if ($check->num_rows > 0) {
+					if (pg_num_rows($check) > 0) {
 						$c =0;
-						while($row = $check->fetch_assoc()) {
+						while($row = pg_fetch_assoc($check)) {
 							//	if ($row['time']==$date_today) {
 								$c +=1;
 									
@@ -1301,13 +1301,13 @@ class Get extends DB {
 												  <tbody id="content_report">';
 			if ($type == 0) { //today current day
 			if ($chinhanh ==-1) {
-				$check = $this->db->query("SELECT * FROM order_sp WHERE time='$date_today' ORDER BY orderID DESC LIMIT 20");					
+				$check = pg_query($this->db, "SELECT * FROM order_sp WHERE time='$date_today' ORDER BY orderID DESC LIMIT 20");					
 			} else {
-				$check = $this->db->query("SELECT * FROM order_sp WHERE time='$date_today' and store_id='$chinhanh' ORDER BY orderID DESC LIMIT 20");	
+				$check = pg_query($this->db, "SELECT * FROM order_sp WHERE time='$date_today' and store_id='$chinhanh' ORDER BY orderID DESC LIMIT 20");	
 			}
-					if ($check->num_rows > 0) {
+					if (pg_num_rows($check) > 0) {
 						echo $st;
-						while($row = $check->fetch_assoc()) {
+						while($row = pg_fetch_assoc($check)) {
 							$main_date = $row['time'];
 								if ($main_date==$date_today) {
 										echo $this->getAdminOrderFollowReport($row['orderID']);
@@ -1318,13 +1318,13 @@ class Get extends DB {
 					}	
 			if ($type == 1) { //a to b
 				if ($chinhanh ==-1) {
-					$check = $this->db->query("SELECT * FROM order_sp WHERE time BETWEEN '$a' AND '$b'  ORDER BY orderID DESC LIMIT 20");	
+					$check = pg_query($this->db, "SELECT * FROM order_sp WHERE time BETWEEN '$a' AND '$b'  ORDER BY orderID DESC LIMIT 20");	
 				} else {
-					$check = $this->db->query("SELECT * FROM order_sp WHERE time BETWEEN '$a' AND '$b' and store_id='$chinhanh' ORDER BY orderID DESC LIMIT 20");	
+					$check = pg_query($this->db, "SELECT * FROM order_sp WHERE time BETWEEN '$a' AND '$b' and store_id='$chinhanh' ORDER BY orderID DESC LIMIT 20");	
 				}
-					if ($check->num_rows > 0) {
+					if (pg_num_rows($check) > 0) {
 						echo $st;
-						while($row = $check->fetch_assoc()) {
+						while($row = pg_fetch_assoc($check)) {
 								echo $this->getAdminOrderFollowReport($row['orderID']);
 						}
 						echo '  </tbody></table></div>';
@@ -1368,9 +1368,9 @@ class Get extends DB {
 	}
 		
 	function getCheckBranch($name) {
-		$check = $this->db->query("SELECT * FROM store WHERE store_name='$name'");	
+		$check = pg_query($this->db, "SELECT * FROM store WHERE store_name='$name'");	
 				
-				if ($check->num_rows > 0) {
+				if (pg_num_rows($check) > 0) {
 					return true;				
 				} else {
 					return false;	
