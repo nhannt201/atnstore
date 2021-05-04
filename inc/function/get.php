@@ -216,8 +216,7 @@ class Get extends DB {
 				$nowlong = pg_query($this->db, "SELECT * FROM category WHERE id='$idcate'");	
 				if (pg_num_rows($nowlong) > 0) {
 					$rowNW = pg_fetch_assoc($nowlong);
-						echo '<!--Card '.$rowNW['name'].'-->
-							<div class="card" id="'.strtolower($rowNW['name']).'">
+						echo '<div class="card" id="'.strtolower($rowNW['name']).'">
 							  <div class="card-header text-center"><h4>Other '.$rowNW['name'].' products</h4></div>
 							  <div class="card-body">
 							  <div class="container-fluid bg-3">    
