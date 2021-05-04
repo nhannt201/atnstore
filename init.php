@@ -18,25 +18,109 @@ class DB {
 				echo("Database servers are having problems: "); //. mysqli_connect_error());
 			} else {
 				 $this->db = $conn;
-				// echo "ket noi thnh cong";
+				 //echo "ket noi thnh cong";
 			}
 			
 			//if (!$conn->set_charset("utf8")) { } //UTF8
 
-			//date_default_timezone_set('Asia/Ho_Chi_Minh');
+			date_default_timezone_set('Asia/Ho_Chi_Minh');
 
-			//if (date_default_timezone_get()) {
+			if (date_default_timezone_get()) {
 			  //  echo 'date_default_timezone_set: ' . date_default_timezone_get() . '';
-			//}
+			}
 		}
 	}
 
 }
 
 
+class Get extends DB {
+	
+			
+	
+	function getFullMenu(){
+			$check = pg_query($this->db, "SELECT * FROM menu");		
+				//if ($check->num_rows > 0) {
+					$num = 0;
+					while($row = pg_fetch_assoc($check)) {
+						echo '<label>Menu'.$num.': (<a href="/edit.php?n=1&delID='.$row['id'].'"><u>Delete</u></a>) </label><input type="text" name="n'.$row['id'].'" value="'.$this->getMenuWhereId($row['id']).'"/><p>';
+						$num++;
+					}					
+				//}				
+		}
+	function getMenu(){
+			//$result = pg_query($conn, 'SELECT * FROM menu');
+			$check = pg_query($this->db, "SELECT * FROM menu");	
+				//if(pg_num_rows($check) > 0) {
+					$num = 0;
+					while($row = pg_fetch_assoc($check)) {
+						echo '<a onClick="choose('.$num.');">'.$row['name'].'</a>';
+						$num++;
+					}					
+				//}				
+		}
+	function getMenuWhereId($id){
+			$check = pg_query($this->db,"SELECT * FROM menu WHERE id='$id'");	
+				//if ($check->num_rows > 0) {
+					$row = pg_fetch_assoc($check);
+					return $row['name'];				
+				//}				
+		}
+	function getContent($id){
+			$check = pg_query($this->db,"SELECT * FROM menu WHERE id='$id'");	
+				//if ($check->num_rows > 0) {
+					$row = pg_fetch_assoc($check);
+					return addslashes($row['content']);				
+				//}				
+		}
+		function getFullEditContent(){
+			$check = pg_query($this->db,"SELECT * FROM menu");	
+				//if ($check->num_rows > 0) {
+					while($row = pg_fetch_assoc($check)) {
+						echo '<label>'.$this->getMenuWhereId($row['id']).': </label><br><textarea rows="2" type="text" name="n'.$row['id'].'" >'.$this->getContent($row['id']).'</textarea><p>';			
+					}
+				//}				
+		}
+	function getFullContent() {
+		$check = pg_query($this->db,"SELECT * FROM menu");	
+				//if ($check->num_rows > 0) {
+					$num = 0;
+					while($row = pg_fetch_assoc($check)) {
+						echo 'case '.$num.':
+									content.innerHTML = "'.$this->getContent($row['id']).'";
+								break;';
+						$num++;
+					}					
+				//}	
+	}
+}
 class Post extends DB {
-/**
-DROP TABLE IF EXISTS banner;
+	function upMenu($id, $name){
+		$query_it = "UPDATE menu SET name='$name' WHERE id='$id'";
+		pg_query($this->db,$query_it);	
+	}
+	function upContent($id, $content){
+		$query_it = "UPDATE menu SET content='$content' WHERE id='$id'";
+		pg_query($this->db,$query_it);	
+	}
+	function delID($id){
+		$query_it = "DELETE FROM menu WHERE id=$id";
+		pg_query($this->db,$query_it);	
+	}
+	function addMenu($name){
+		//$check = pg_query($this->db,"SELECT * FROM menu WHERE name='$name'");	
+				//if ($check->num_rows > 0) {
+				//	echo "Ten menu da ton tai";	
+				//} else {
+					$query_it = "INSERT INTO menu (name, content) VALUES ('$name', '$name')";
+					pg_query($this->db,$query_it);
+					header('Location: /edit.php?n=3');
+					exit;
+				//}				
+			
+	}
+	function init(){
+			$query_it = "DROP TABLE IF EXISTS banner;
 			DROP TABLE IF EXISTS banner;
 			DROP TABLE IF EXISTS category;
 			DROP TABLE IF EXISTS customer;
@@ -44,9 +128,6 @@ DROP TABLE IF EXISTS banner;
 			DROP TABLE IF EXISTS order_sp;
 			DROP TABLE IF EXISTS product;
 			DROP TABLE IF EXISTS store;
-**/
-	function init(){
-			$query_it = "
 			
 CREATE TABLE banner (
     id SERIAL PRIMARY KEY,
@@ -97,7 +178,36 @@ CREATE TABLE store (
     store_name character varying(9) DEFAULT NULL::character varying,
     store_address character varying(11) DEFAULT NULL::character varying,
     store_phone character varying(10) DEFAULT NULL::character varying
-);";
+);
+
+
+ALTER TABLE banner
+  ADD PRIMARY KEY (id);
+
+
+ALTER TABLE category
+  ADD PRIMARY KEY (id);
+
+ALTER TABLE customer
+  ADD PRIMARY KEY (id);
+
+
+ALTER TABLE order_details
+  ADD PRIMARY KEY (id);
+
+
+ALTER TABLE order_sp
+  ADD PRIMARY KEY (orderID);
+
+
+ALTER TABLE product
+  ADD PRIMARY KEY (productID);
+
+
+ALTER TABLE store
+  ADD PRIMARY KEY (store_id);
+  
+";
 			pg_query($this->db,$query_it);	
 			echo "Create Table!";
 			
@@ -152,6 +262,7 @@ INSERT INTO order_sp (orderID, custID, store_id, notes, time, status) VALUES
 (8, 1, 1, '', '04-05-2021', 0),
 (10, 1, 0, 'ok', '04-05-2021', 0);
 
+
 INSERT INTO product (productID, category, name, price, img, descc, config, sale) VALUES
 (1, 1, 'Calming Clouds™ Mobile &amp; Soother', 500000, 'https://i.imgur.com/wKSwYzD.png', 'Get little ones excited for their future rides to school with the Little People® Sit with Me School Bus! Get the fun started by pressing the Discovery Button to flip open the stop sign and pop open the door to let on passengers.', 'Get little ones excited for their future rides to school with the Little People® Sit with Me School Bus! Get the fun started by pressing the Discovery Button to flip open the stop sign and pop open the door to let on passengers.Get little ones excited for their future rides to school with the Little People® Sit with Me School Bus! Get the fun started by pressing the Discovery Button to flip open the stop sign and pop open the door to let on passengers.Get little ones excited for their future rid', 0),
 (2, 1, 'Fisher-Price® Twinkle &amp; Cuddle Cloud Soother', 725000, 'https://i.imgur.com/AguJUYK.png', 'The Twinkle &amp; Cuddle Cloud Soother from Fisher-Price is a cuddly friend that helps comfort and soothe your baby as they grow from the crib to a big-kid bed. ', 'The Twinkle &amp; Cuddle Cloud Soother from Fisher-Price is a cuddly friend that helps comfort and soothe your baby as they grow from the crib to a big-kid bed. The cloud easily attaches to most cribs and features the Ready, Settle, Sleep™ playlist of gentle music and soft white noise, which syncs with the multicolor light show to set a soothing scene for sweet dreams. And since every baby is different, you can easily customize the music, soothing nature sounds, volume, and light color to find the combination that works best for your little snoozer! As your baby grows, this snuggly soother becomes a comforting take-along pal.', 2),
@@ -159,7 +270,7 @@ INSERT INTO product (productID, category, name, price, img, descc, config, sale)
 (4, 1, 'Chatter Telephone®', 120000, 'https://i.imgur.com/lF6AHXp.png', 'With its friendly face, spinning dial, fun ringing-phone sounds, and eyes that move up and down as you pull it along, the Fisher-Price® Chatter Telephone® helps get your baby chatting—and strolling—like a pro!', 'With its friendly face, spinning dial, fun ringing-phone sounds, and eyes that move up and down as you pull it along, the Fisher-Price® Chatter Telephone® helps get your baby chatting—and strolling—like a pro!\r\n\r\nBabies can sit &amp; play or pull it along\r\nChatter Telephone® features fun ringing sounds and eyes that move up &amp; down\r\nDial introduces numbers 0-9\r\nEncourages early role play\r\nFor infants and toddlers ages 12 months and older\r\nSKU #: FGW66\r\n', 0),
 (5, 1, 'Laugh & Learn® Smart Stages™ Learn With Puppy Walker', 576331, 'https://i.imgur.com/g6211zo.png', 'Let''s go for a stroll, baby! Puppy is the perfect pal for your growing baby, offering exciting hands-on activities for little sitters and tons of encouraging phrases and support for those first little steps. As little ones grow and go, Puppy will introduce them to the alphabet, shapes, colors, counting, and even Spanish words!\r\n', 'Let''s go for a stroll, baby! Puppy is the perfect pal for your growing baby, offering exciting hands-on activities for little sitters and tons of encouraging phrases and support for those first little steps. As little ones grow and go, Puppy will introduce them to the alphabet, shapes, colors, counting, and even Spanish words!\r\n\r\nWhere development comes into play™\r\n\r\nAcademics: Playful songs and phrases introduce your baby to the alphabet, colors, numbers, Spanish words, and more!\r\n\r\nGross Motor: Little muscles get a big workout as sitting little ones reach for and interact with the activities and then pull up to stand and walk behind the walker.\r\n\r\nCuriosity & Wonder: As babies discover how to activate the music and phrases by pressing the buttons or pushing the walker along, they see that their actions can make fun things happen—hey, that''s cause & effect!\r\n\r\n', 5),
 (6, 2, 'Cape Cottage Playhouse™ - Pink', 3067081, 'https://i.imgur.com/m90piAg.png', 'The Little Tikes Cape Cottage Playhouse in pink combines style and fun! The modern windows, arched doorway and brick details make this little house the perfect first playhouse for any little girl!  Made in USA.', 'The Little Tikes Cape Cottage Playhouse in pink combines style and fun! The modern windows, arched doorway and brick details make this little house the perfect first playhouse for any little girl!  Made in USA.\r\n\r\nEasy assembly\r\nContemporary styling\r\n2 Working doors\r\n2 Windows with working shutters\r\nMail slot (mail not included)\r\nFlag holder (flags are not included)\r\nAssembly Required', 0),
-(7, 2, 'First Fridge', 1175956, 'https://i.imgur.com/sRj2IQX.png', 'Kids can pretend to cook and prepare food just like their parents with the super realistic Little Tikes First Fridge. This sleek, modern pretend play fridge is packed with interactive features: a working ice dispenser, dual French doors, a separate freezer drawer, and working fridge lights.', 'Kids can pretend to cook and prepare food just like their parents with the super realistic Little Tikes First Fridge. This sleek, modern pretend play fridge is packed with interactive features: a working ''ice'' dispenser, dual French doors, a separate freezer drawer, and working fridge lights. Plus, it makes realistic sounds like crushed ice, water dispensing, beeps, and more to really extend the pretend play for hours. Pretending to prepare food and do other chores helps kids gain a sense of responsibility, an important part of social-emotional learning. \r\n\r\n \r\n\r\nThe First Fridge is easy to set up to its full size and fits all 11 included accessories for easy cleanup too. The compact design: (15.80\"L X 11.50\"W x 23.00\"H) is great for small spaces. Kids can even customize it by displaying their grocery lists or artwork on the door. Encourage kids to engage in imaginative pretend play with the First Fridge by Little Tikes!', 0),
+(7, 2, 'First Fridge', 1175956, 'https://i.imgur.com/sRj2IQX.png', 'Kids can pretend to cook and prepare food just like their parents with the super realistic Little Tikes First Fridge. This sleek, modern pretend play fridge is packed with interactive features: a working ''ice'' dispenser, dual French doors, a separate freezer drawer, and working fridge lights.', 'Kids can pretend to cook and prepare food just like their parents with the super realistic Little Tikes First Fridge. This sleek, modern pretend play fridge is packed with interactive features: a working ''ice'' dispenser, dual French doors, a separate freezer drawer, and working fridge lights. Plus, it makes realistic sounds like crushed ice, water dispensing, beeps, and more to really extend the pretend play for hours. Pretending to prepare food and do other chores helps kids gain a sense of responsibility, an important part of social-emotional learning. \r\n\r\n \r\n\r\nThe First Fridge is easy to set up to its full size and fits all 11 included accessories for easy cleanup too. The compact design: (15.80\"L X 11.50\"W x 23.00\"H) is great for small spaces. Kids can even customize it by displaying their grocery lists or artwork on the door. Encourage kids to engage in imaginative pretend play with the First Fridge by Little Tikes!', 0),
 (8, 2, 'Backyard Bungalow House', 4266331, 'https://i.imgur.com/ZvImb1f.png', 'The Little Tikes Backyard Bungalow Roleplay Playhouse is big enough for all imaginations.', 'The Little Tikes Backyard Bungalow Roleplay Playhouse is big enough for all imaginations. This outdoor playhouse has enough room for multiple kids to play in at the same time and includes a working door and mailbox with a slot that actually opens and closes. Three roleplay stations include: a kitchenette with pretend stove and sink, a lemonade stand with a real chalkboard and a gardening station with make-believe flowers. Over 25 accessories and a canopy that opens and closes means kids 2+ will be able to play for hours. Kids will dream large with the Little Tikes Backyard Bungalow Roleplay Playhouse! Made in USA with US & imported components.', 0),
 (9, 2, 'LOL Surprise™ Winter Disco™ Cottage', 3805081, 'https://i.imgur.com/Guo0GGN.png', 'If your LOL Surprise fan loves imaginative role play, then look no further than the Little Tikes LOL Surprise Winter Disco Playhouse. ', 'If your LOL Surprise fan loves imaginative role play, then look no further than the Little Tikes LOL Surprise Winter Disco Playhouse. Both you and your kids are sure to love this fashionable playhouse with its light-up disco ball, inflatable chair, glittery details, working doors, windows, and shutters.  Kids will love the fun role play elements like a working mail slot and flag holder that will spark their imaginations. It''s easy to assemble and take apart with minimal hassle and tools, and the lightweight design makes it easy to move, transport, or store as well. The Little Tikes LOL Surprise Winter Disco Playhouse can be used indoors or outdoors, there''s no limit to what your kids can imagine as they play.\r\n', 0),
 (10, 2, 'Real Wood Adventures™ Bobcat Ridge™', 39206019, 'https://i.imgur.com/yKzx6a5.png', 'The Real Wood Adventures Bobcat Ridge playset has space and activities for up to 12 kids to play at once.', 'The Real Wood Adventures Bobcat Ridge playset has space and activities for up to 12 kids to play at once. The roomy, comfortable, multi-tiered clubhouse deck has fabric shades and is perfect for campouts, stargazing, and all of kids'' favorite activities.', 2),
@@ -180,6 +291,7 @@ INSERT INTO product (productID, category, name, price, img, descc, config, sale)
 (25, 5, 'Harry Potter & Hermione Granger™', 2767269, 'https://i.imgur.com/xBgTIDH.png', 'Make a BIG impression on any young witch or wizard with the super-sized LEGO® Harry Potter™: Harry Potter & Hermione Granger™ (76393).', 'Make a BIG impression on any young witch or wizard with the super-sized LEGO® Harry Potter™: Harry Potter & Hermione Granger™ (76393).\r\n\r\nLarge-scale, iconic figures\r\nKids can maximize the magical fun with these brick-built Harry Potter and Hermione Granger models. Both figures stand 10 in. (26 cm) tall and possess all the adjustability of the smaller LEGO minifigures: movable hand, leg and hip joints, plus a rotatable head for the Harry Potter figure. Harry has a removable, fabric robe and both models carry brick-built wands to help inspire magical stories for kids to play out. When the action stops, kids can put the 2 Hogwarts™ friends into a pose to create an amazing ‘Harry and Hermione’ display for their room. Individual sets of building instructions allow 2 builders to share the fun together.', 3);
 
 
+
 INSERT INTO store (store_id, store_name, store_address, store_phone) VALUES
 (0, 'Leeds', 'Los Angeles', '5765734552'),
 (1, 'Belfast', '', ''),
@@ -188,7 +300,7 @@ INSERT INTO store (store_id, store_name, store_address, store_phone) VALUES
 ";
   
   pg_query($this->db,$q2);	
-			echo "<br>Add data to Table!<br>Completed!";
+			echo "<br>Add data to Table!";
 	}
 	
 	//DROP TABLE IF EXISTS menu;
@@ -197,4 +309,6 @@ INSERT INTO store (store_id, store_name, store_address, store_phone) VALUES
 }
 
 $start = new Post();
+
+
 $start->init();
