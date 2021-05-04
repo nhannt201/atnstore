@@ -29,15 +29,15 @@ class Post extends DB {
 							$_SESSION['user_id'] = $last_id;
 						}
 					//Thêm đơn hàng mới
-					//$newporder = "INSERT INTO order_sp (custID, notes, list_sp, time, status) VALUES ('$last_id', '$notes', '$list_sp','$timee', 0)";
-					$newporder = "INSERT INTO order_sp (custID, store_id, notes, time, status) VALUES ('$last_id', '$branch_id', '$notes','$timee', 0)";
+					//$newporder = "INSERT INTO order_sp (custid, notes, list_sp, time, status) VALUES ('$last_id', '$notes', '$list_sp','$timee', 0)";
+					$newporder = "INSERT INTO order_sp (custid, store_id, notes, time, status) VALUES ('$last_id', '$branch_id', '$notes','$timee', 0)";
 					pg_query($this->db,$newporder);
 					$insert_row = pg_fetch_row($newporder);
 					$order_id = $insert_row[0];
 					//Bo sung cai moi. Them add vao order details
-						foreach($_SESSION['cart'] as $productID => $soluong)  { 
+						foreach($_SESSION['cart'] as $productid => $soluong)  { 
 							//Chen giao order_details
-							$add_details = "INSERT INTO order_details (orderID, productID, qty) VALUES ('$order_id', '$productID','$soluong')";
+							$add_details = "INSERT INTO order_details (orderid, productid, qty) VALUES ('$order_id', '$productid','$soluong')";
 							pg_query($this->db,$add_details);
 						}
 					//Add xong, gio hang trong!
@@ -75,16 +75,16 @@ class Post extends DB {
 							$_SESSION['user_id'] = $id_us;
 						}
 						//Thêm đơn hàng mới
-						//$newporder = "INSERT INTO order_sp (custID, notes, list_sp, time, status) VALUES ('$id_us', '$notes', '$list_sp','$timee', 0)";
-						$newporder = "INSERT INTO order_sp (custID, store_id, notes, time, status) VALUES ('$id_us', '$store_id', '$notes','$timee', 0)";
+						//$newporder = "INSERT INTO order_sp (custid, notes, list_sp, time, status) VALUES ('$id_us', '$notes', '$list_sp','$timee', 0)";
+						$newporder = "INSERT INTO order_sp (custid, store_id, notes, time, status) VALUES ('$id_us', '$store_id', '$notes','$timee', 0)";
 						pg_query($this->db,$newporder);
 						$insert_row = pg_fetch_row($newporder);
 						$order_id = $insert_row[0];
 						//$order_id = $this->db->insert_id; //Lay duoc ma don hang roi
 						//Bo sung cai moi. Them add vao order details
-						foreach($_SESSION['cart'] as $productID => $soluong)  { 
+						foreach($_SESSION['cart'] as $productid => $soluong)  { 
 							//Chen giao order_details
-							$add_details = "INSERT INTO order_details (orderID, productID, qty) VALUES ('$order_id', '$productID','$soluong')";
+							$add_details = "INSERT INTO order_details (orderid, productid, qty) VALUES ('$order_id', '$productid','$soluong')";
 							pg_query($this->db,$add_details);
 						}
 						//Add xong, gio hang trong!
@@ -141,16 +141,16 @@ class Post extends DB {
 						$id_us = $_SESSION['user_id'];
 						//}
 						//Thêm đơn hàng mới
-						//$newporder = "INSERT INTO order_sp (custID, notes, list_sp, time, status) VALUES ('$id_us', '$notes', '$list_sp','$timee', 0)";
-						$newporder = "INSERT INTO order_sp (custID, store_id, notes, time, status) VALUES ('$id_us', '$store_id', '$notes','$timee', 0)";
+						//$newporder = "INSERT INTO order_sp (custid, notes, list_sp, time, status) VALUES ('$id_us', '$notes', '$list_sp','$timee', 0)";
+						$newporder = "INSERT INTO order_sp (custid, store_id, notes, time, status) VALUES ('$id_us', '$store_id', '$notes','$timee', 0)";
 						pg_query($this->db,$newporder);
 						$insert_row = pg_fetch_row($newporder);
 						$order_id = $insert_row[0];
 						//$order_id = $this->db->insert_id; //Lay duoc ma don hang roi
 						//Bo sung cai moi. Them add vao order details
-						foreach($_SESSION['cart'] as $productID => $soluong)  { 
+						foreach($_SESSION['cart'] as $productid => $soluong)  { 
 							//Chen giao order_details
-							$add_details = "INSERT INTO order_details (orderID, productID, qty) VALUES ('$order_id', '$productID','$soluong')";
+							$add_details = "INSERT INTO order_details (orderid, productid, qty) VALUES ('$order_id', '$productid','$soluong')";
 							pg_query($this->db,$add_details);
 						}
 						//Add xong, gio hang trong!
@@ -210,7 +210,7 @@ class Post extends DB {
 							unset($_SESSION['login_ad']);
 						}
 						//Them select don hang de in ra.
-						$get_order = pg_query($this->db,"SELECT * FROM order_sp WHERE custID = '$id_us' ORDER BY orderID DESC LIMIT 20");
+						$get_order = pg_query($this->db,"SELECT * FROM order_sp WHERE custid = '$id_us' ORDER BY orderid DESC LIMIT 20");
 						//Them don hang vao SESSION
 						if(pg_num_rows($get_order) > 0) {
 							if (!isset($_SESSION['order'])) {
@@ -239,7 +239,7 @@ class Post extends DB {
 	}
 	//Update SP
 	function updateProduct($id, $category, $tensp, $giatien, $linkanh, $mota, $cauhinh, $sale){
-		$query_it = "UPDATE product SET category='$category', name='$tensp', price='$giatien', img='$linkanh', descc='$mota', config='$cauhinh', sale=$sale WHERE productID='$id'";
+		$query_it = "UPDATE product SET category='$category', name='$tensp', price='$giatien', img='$linkanh', descc='$mota', config='$cauhinh', sale=$sale WHERE productid='$id'";
 		pg_query($this->db,$query_it);
 	}
 	//Update cart beforre dang xuảt, Luu session gio hang truoc khi thoat
@@ -256,37 +256,37 @@ class Post extends DB {
 	}
 	//Update product status
 	function updateStatusOrder($id){
-		$query_it = "UPDATE order_sp SET  status=1 WHERE orderID='$id'";
+		$query_it = "UPDATE order_sp SET  status=1 WHERE orderid='$id'";
 		pg_query($this->db,$query_it);
 	}
 	function updateStatusOrder_Reset($id){
-		$query_it = "UPDATE order_sp SET  status=0 WHERE orderID='$id'";
+		$query_it = "UPDATE order_sp SET  status=0 WHERE orderid='$id'";
 		pg_query($this->db,$query_it);
 	}
 	
 	function deleteOrder($id){
 		//Xoa trong bang order details
-		$query_dt = "DELETE FROM order_details WHERE orderID='$id'";
+		$query_dt = "DELETE FROM order_details WHERE orderid='$id'";
 		pg_query($this->db,$query_dt);
 		//Xoa trong bang Order
-		$query_it = "DELETE FROM order_sp WHERE orderID='$id'";
+		$query_it = "DELETE FROM order_sp WHERE orderid='$id'";
 		pg_query($this->db,$query_it);
 	}
 	
 	function deleteOrderUser($id_or, $u_id){
-		$check_us = pg_query($this->db,"SELECT * FROM order_sp WHERE custID = '$u_id' and orderID= '$id_or'");
+		$check_us = pg_query($this->db,"SELECT * FROM order_sp WHERE custid = '$u_id' and orderid= '$id_or'");
 		if(pg_num_rows($check_us) == 1) {
 			//Xoa trong bang Order
-			$query_it = "DELETE FROM order_sp WHERE orderID='$id_or'";
+			$query_it = "DELETE FROM order_sp WHERE orderid='$id_or'";
 			pg_query($this->db,$query_it);
 			//Xoa trong bang order details
-			$query_dt = "DELETE FROM order_details WHERE orderID='$id_or'";
+			$query_dt = "DELETE FROM order_details WHERE orderid='$id_or'";
 			pg_query($this->db,$query_dt);
 		}	
 	}
 	
 	function deleteProduct($product_id){
-		$query_it = "DELETE FROM product WHERE productID='$product_id'";
+		$query_it = "DELETE FROM product WHERE productid='$product_id'";
 		pg_query($this->db,$query_it);
 	}
 	//Update Bannerr
