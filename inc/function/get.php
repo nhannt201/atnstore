@@ -210,24 +210,8 @@ class Get extends DB {
 							</div>
 						  </div>
 						</div><br>';//.$row['category'];		
-				// $this->getBodySimilar(trim($row['category']));
-				//Tach cai kia rad2deg
-				$idcate = $row['category'];
-				$nowlong = pg_query($this->db, "SELECT * FROM category WHERE id='$idcate'");	
-				if (pg_num_rows($nowlong) > 0) {
-					$rowNW = pg_fetch_assoc($nowlong);
-						echo '<div class="card" id="'.strtolower($rowNW['name']).'">
-							  <div class="card-header text-center"><h4>Other '.$rowNW['name'].' products</h4></div>
-							  <div class="card-body">
-							  <div class="container-fluid bg-3">    
-								  <div class="row">
-									 '.$this->getProductRandom($id).'
-								  </div>
-								</div>
-							  </div>
-							</div><br>';				
-				}	
-				//het tach
+				echo $this->getBodySimilar($row['category']);
+				
 						
 			}				
 		}
@@ -1004,21 +988,23 @@ class Get extends DB {
 		}
 		
 		function getBodySimilar($idd){
+			$contr = "";
 			$check = pg_query($this->db, "SELECT * FROM category WHERE id='$idd'");	
 				if (pg_num_rows($check) > 0) {
 					$row = pg_fetch_assoc($check);
-						echo '<!--Card '.$row['name'].'-->
+						$contr = '<!--Card '.$row['name'].'-->
 							<div class="card" id="'.strtolower($row['name']).'">
 							  <div class="card-header text-center"><h4>Other '.$row['name'].' products</h4></div>
 							  <div class="card-body">
 							  <div class="container-fluid bg-3">    
 								  <div class="row">
-									 '.$this->getProductRandom($id).'
+									 '.$this->getProductRandom($idd).'
 								  </div>
 								</div>
 							  </div>
 							</div><br>';				
-				}		
+				}	
+			return $contr;
 		}
 		
 		
