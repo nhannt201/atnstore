@@ -988,11 +988,11 @@ class Get extends DB {
 		}
 		
 		function getBodySimilar($idd){
-			$contr = "";
+			$contr = "loveeeeeeeee";
 			$check = pg_query($this->db, "SELECT * FROM category WHERE id='$idd'");	
 				if (pg_num_rows($check) > 0) {
 					$row = pg_fetch_assoc($check);
-						$contr = '<!--Card '.$row['name'].'-->
+						$contr .= '<!--Card '.$row['name'].'-->
 							<div class="card" id="'.strtolower($row['name']).'">
 							  <div class="card-header text-center"><h4>Other '.$row['name'].' products</h4></div>
 							  <div class="card-body">
@@ -1004,7 +1004,7 @@ class Get extends DB {
 							  </div>
 							</div><br>';				
 				}	
-			return $contr;
+			return $contr."loi gi vay troi!!!";
 		}
 		
 		
