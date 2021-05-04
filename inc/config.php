@@ -7,10 +7,10 @@ class DB {
     private $database = "dcqa0np5l3i67k";
 	private $charset = "utf8";
 	public function __construct(){
-		//if(!isset($_SESSION)) {
-			//session_set_cookie_params(31536000,"/");
-			//session_start();
-		//}
+		if(!isset($_SESSION)) {
+			session_set_cookie_params(31536000,"/");
+			session_start();
+		}
 		if(!isset($this->db)){
 			//$t=time();
 			//$conn = mysqli_connect($this->hostname, $this->username, $this->password,$this->database);

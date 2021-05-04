@@ -183,9 +183,9 @@ CREATE TABLE store (
 			echo "Create Table!";
 			
 			$q2 = "INSERT INTO banner (id, name, img, link) VALUES
-(1, 'Laugh & Learn® Smart Stages™ Learn With Puppy Walker toy', 'https://i.imgur.com/slEZxGp.png', 'http://localhost/toys/laugh---learn---smart-stages----learn-with-puppy-walker--_5.html'),
-(2, 'Real Wood Adventures™ Bobcat Ridge™', 'https://i.imgur.com/jY1leww.png', 'http://localhost/toys/real-wood-adventures----bobcat-ridge---_10.html'),
-(3, 'Jurassic World Destroy', 'https://i.imgur.com/vQTK3xJ.png', 'http://localhost/toys/jurassic-world-destroy--n-devour-indominus-rex_14.html');
+(1, 'Laugh & Learn® Smart Stages™ Learn With Puppy Walker toy', 'https://i.imgur.com/slEZxGp.png', '/toys/laugh---learn---smart-stages----learn-with-puppy-walker--_5.html'),
+(2, 'Real Wood Adventures™ Bobcat Ridge™', 'https://i.imgur.com/jY1leww.png', '/toys/real-wood-adventures----bobcat-ridge---_10.html'),
+(3, 'Jurassic World Destroy', 'https://i.imgur.com/vQTK3xJ.png', '/toys/jurassic-world-destroy--n-devour-indominus-rex_14.html');
 
 INSERT INTO category (id, name) VALUES
 (1, 'Fisher Price'),

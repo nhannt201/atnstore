@@ -329,7 +329,7 @@ class Get extends DB {
 						$id_us = $row['custID'];
 						$order_id = $row['orderID'];
 						$get_us = pg_query($this->db, "SELECT * FROM customer WHERE id='$id_us'");	
-						$row2 = $get_us->fetch_assoc();
+						$row2 = pg_fetch_assoc($get_us);//->fetch_assoc();
 						$danhxung = "";
 						if ($row2['youare'] == 0){
 							$danhxung = "Mr. ";
@@ -351,12 +351,12 @@ class Get extends DB {
 									//	}
 								$get_list_sp = pg_query($this->db, "SELECT * FROM order_details WHERE orderID='$order_id'");
 								//Lay so luong san pham
-								while($row_get = $get_list_sp->fetch_assoc()) {
+								while($row_get = pg_fetch_assoc($get_list_sp)) {
 									$soluong_total += $row_get['qty'];
 								}
 								if ($get_list_sp->num_rows > 0) { 
 									//$soluong_total = $get_list_sp->num_rows;
-									$row_sp = $get_list_sp->fetch_assoc(); //{
+									$row_sp = pg_fetch_assoc($get_list_sp); //{
 									echo '<tr> 
 											  <th scope="row">'.$order_id.'</th>
 											  <td>'.$this->getBranchName($row['store_id']).'</td>
@@ -388,7 +388,7 @@ class Get extends DB {
 						$id_us = $row['custID'];
 						$order_id = $row['orderID'];
 						$get_us = pg_query($this->db, "SELECT * FROM customer WHERE id='$id_us'");	
-						$row2 = $get_us->fetch_assoc();
+						$row2 = pg_fetch_assoc($get_us);
 						$danhxung = "";
 						if ($row2['youare'] == 0){
 							$danhxung = "Mr. ";
@@ -403,12 +403,12 @@ class Get extends DB {
 							$soluong_total=0;
 								$get_list_sp = pg_query($this->db, "SELECT * FROM order_details WHERE orderID='$order_id'");
 								//Lay so luong san pham
-								while($row_get = $get_list_sp->fetch_assoc()) {
+								while($row_get = pg_fetch_assoc($get_list_sp)) {
 									$soluong_total += $row_get['qty'];
 								}
 								if ($get_list_sp->num_rows > 0) { 
 									//$soluong_total = $get_list_sp->num_rows;
-									$row_sp = $get_list_sp->fetch_assoc(); //{
+									$row_sp = pg_fetch_assoc($get_list_sp); //{
 									echo '<tr> 
 											  <th>'.$row['time'].'</th>
 											  <td>'.$this->getBranchName($row['store_id']).'</td>
@@ -446,7 +446,7 @@ class Get extends DB {
 													//foreach($getLS as $key2 => $soluong)  { 
 														$check2 = pg_query($this->db, "SELECT * FROM product WHERE productID='$productID'");	
 														if ($check2->num_rows > 0) { 															
-															while($row2 = $check2->fetch_assoc()) {
+															while($row2 = pg_fetch_assoc($check2)) {
 																if ($row2['sale'] > 0) {
 																$sale_xl = $row2['price'] - ($row2['price']*($row2['sale']/100)); //lay gia tien giam gia
 															$thanhtien +=$sale_xl*$soluong_qty;
@@ -504,7 +504,7 @@ class Get extends DB {
 										//}
 										$get_list_sp = pg_query($this->db, "SELECT * FROM order_details WHERE orderID='$order_id'");
 										//Lay so luong san pham
-										while($row_get = $get_list_sp->fetch_assoc()) {
+										while($row_get = pg_fetch_assoc($get_list_sp)) {
 											$soluong_total += $row_get['qty'];
 										}
 										//Lay tinh trang don hang
@@ -536,7 +536,7 @@ class Get extends DB {
 				$id_us = $row['custID'];
 				$get_us = pg_query($this->db, "SELECT * FROM customer WHERE id='$id_us'");	
 				//if ($get_us->num_rows > 0) {
-					$row2 = $get_us->fetch_assoc();
+					$row2 = pg_fetch_assoc($get_us);
 					if ($row2['youare'] == 0) {
 					$danhxung = "Mr. ";
 					} else {
@@ -599,11 +599,11 @@ class Get extends DB {
 									//		$soluong_total += $row_get['qty'];
 									//	}
 										//Lay thong tin order
-										while($row_rs = $get_list_sp->fetch_assoc()) {
+										while($row_rs = pg_fetch_assoc($get_list_sp)) {
 											$productID = $row_rs['productID'];
 											$check2 = pg_query($this->db, "SELECT * FROM product WHERE productID='$productID'");	
-											if ($check2->num_rows > 0) {
-												while($row2 = $check2->fetch_assoc()) {
+											if (pg_num_rows($check2) > 0) {
+												while($row2 = pg_fetch_assoc($check2)) {
 														$soluong = $row_rs['qty'];
 													if ($row2['sale'] > 0) {
 														//Nhan so luong co giam gia
