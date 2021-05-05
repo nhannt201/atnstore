@@ -1,7 +1,7 @@
 <?php
 require_once './inc/config.php';
-$get = new Get();
+$post = new Post();
 $timee = date("d-m-Y");
 //echo $get->getFollowDate("21-04-2021",$timee, 1);
 
-$get->getReportLastWeek();
+$post->addProduct(1, "con ga", 2000000, "https://i.imgur.com/gXuoLXn.png", "day la mo taaaaaaaaaaa", "day la cau hinhhhhhhhhhh", 0);
