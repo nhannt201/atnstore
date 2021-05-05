@@ -384,7 +384,7 @@ class Get extends DB {
 							 No results
 							</div></div>';
 				}		
-				echo 'hoan tat';
+				//echo 'hoan tat';
 		}
 		
 		function getAdminOrderFollowReport($iddd){
