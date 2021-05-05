@@ -85,7 +85,7 @@ class Get extends DB {
 		}
 		
 		function getProductRandom($id){
-			$check = pg_query($this->db, "SELECT * FROM product WHERE category='$id' order by RAND() LIMIT 4");	
+			$check = pg_query($this->db, "SELECT * FROM product WHERE category='$id' ORDER BY RANDOM() LIMIT 4");	
 				if (pg_num_rows($check) > 0) { 
 					//$product = "";
 					echo 'co noi dung';
