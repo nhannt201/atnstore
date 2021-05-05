@@ -63,6 +63,7 @@ if (isset($_POST['order_log'])) { //order_log
 		$notes = addslashes($_POST['notes']);
 		$branch_id = $_SESSION['store_id'];
 		if ($stop_post == 0) {
+			echo '<script>alert('.$branch_id.');</script>';
 			$post->addCartLog($email, md5($password), $notes, $branch_id);
 		}
 }
