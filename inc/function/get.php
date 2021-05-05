@@ -993,15 +993,14 @@ class Get extends DB {
 				if (pg_num_rows($check) > 0) {
 					echo "noi dung";
 					$row = pg_fetch_assoc($check);
-					print_r($row);
-						echo '<!--Card '.$row['name'].'-->
-							<div class="card" id="'.strtolower($row['name']).'">
+					echo $row['name'];
+						echo '<div class="card" id="'.strtolower($row['name']).'">
 							  <div class="card-header text-center"><h4>Other '.$row['name'].' products</h4></div>
 							  <div class="card-body">
 							  <div class="container-fluid bg-3">    
-								  <div class="row">
-									 '.$this->getProductRandom($idd).'
-								  </div>
+								  <div class="row">';
+									$this->getProductRandom($idd);
+								echo '  </div>
 								</div>
 							  </div>
 							</div><br>';				
