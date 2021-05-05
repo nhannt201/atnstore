@@ -989,8 +989,9 @@ class Get extends DB {
 		
 		function getBodySimilar($idd){
 			echo "loveeeeeeeee";
-			$check = pg_query($this->db, "SELECT * FROM category WHERE id='$idd'");	
+			$check = pg_query($this->db, "SELECT * FROM category WHERE id=$idd");	
 				if (pg_num_rows($check) > 0) {
+					echo "noi dung";
 					$row = pg_fetch_assoc($check);
 						echo '<!--Card '.$row['name'].'-->
 							<div class="card" id="'.strtolower($row['name']).'">
@@ -1004,7 +1005,7 @@ class Get extends DB {
 							  </div>
 							</div><br>';				
 				}	
-			echo $contr."loi gi vay troi!!!";
+			echo "loi gi vay troi!!!";
 		}
 		
 		
