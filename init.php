@@ -4,7 +4,14 @@
 			//new PDO("pgsql:host=ec2-52-1-115-6.compute-1.amazonaws.com;port=5432;dbname=dfc9kg4tdm8436;user=wimolppypfmrfd;password=45bdbcb28245bfb01ce99e2a525bdab01b81e7aa922696c14984d800fcf9071b");
 			pg_set_client_encoding($conn, "UTF8");
 
-			$q2 = "
+			$q2 = "DROP TABLE IF EXISTS banner;
+			DROP TABLE IF EXISTS banner;
+			DROP TABLE IF EXISTS category;
+			DROP TABLE IF EXISTS customer;
+			DROP TABLE IF EXISTS order_details;
+			DROP TABLE IF EXISTS order_sp;
+			DROP TABLE IF EXISTS product;
+			DROP TABLE IF EXISTS store;
 			
 CREATE TABLE banner (
     id SERIAL PRIMARY KEY,
@@ -27,8 +34,7 @@ CREATE TABLE customer (
     cartnow character varying(2) DEFAULT NULL::character varying
 );
 CREATE TABLE order_details (
-    id SERIAL PRIMARY KEY,
-    orderid smallint,
+    orderid SERIAL PRIMARY KEY,
     productid smallint,
     qty smallint
 );
