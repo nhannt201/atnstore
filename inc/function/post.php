@@ -147,7 +147,7 @@ class Post extends DB {
 						//$qkk = $newporder);
 						//$insert_row = pg_fetch_row($newporder);
 						//get ID Next			
-						$getID = pg_fetch_assoc(pg_query($this->db, "SELECT * FROM order_sp ORDER BY orderid DESC LIMIT = 1"));
+						$getID = pg_fetch_assoc(pg_query($this->db, "SELECT * FROM order_sp ORDER BY orderid DESC LIMIT 1"));
 						$order_id =  $getID['orderid'];//pg_last_oid( $newporder);
 						//End get ID
 						echo $order_id ;
