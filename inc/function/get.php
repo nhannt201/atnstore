@@ -991,7 +991,7 @@ class Get extends DB {
 			$check = pg_query($this->db, "SELECT * FROM category WHERE id=$idd");	
 				if (pg_num_rows($check) > 0) {
 					$row = pg_fetch_assoc($check);
-					echo $row['name'];
+					//echo $row['name'];
 						echo '<div class="card" id="'.strtolower($row['name']).'">
 							  <div class="card-header text-center"><h4>Other '.$row['name'].' products</h4></div>
 							  <div class="card-body">
@@ -1002,7 +1002,7 @@ class Get extends DB {
 								</div>
 							  </div>
 							</div><br>';	
-					$this->getBodySimilar($row['category']);
+					
 				}	
 			
 		}
