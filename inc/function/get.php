@@ -307,6 +307,7 @@ class Get extends DB {
 		function getAdminOrder($num, $type=-1){
 			$qrr = "";
 			if ($type == -1) {
+				echo 'mac dinh -1';
 				if ($num == 0) {
 					$qrr = "SELECT * FROM order_sp ORDER BY orderid DESC LIMIT 20";
 				} else if ($num == 1) {
@@ -315,6 +316,7 @@ class Get extends DB {
 					$qrr = "SELECT * FROM order_sp WHERE status = 1 ORDER BY orderid DESC LIMIT 20 ";
 				}
 			} else {
+				echo 'co tuy chinh '.$type;
 				if ($num == 0) {
 					$qrr = "SELECT * FROM order_sp WHERE store_id='$type' ORDER BY orderid DESC LIMIT 20";
 				} else if ($num == 1) {
@@ -326,7 +328,9 @@ class Get extends DB {
 				
 			$check = pg_query($this->db, $qrr);	
 				if (pg_num_rows($check) > 0) { 
+					echo 'co noid ung';
 					while($row = pg_fetch_assoc($check)) {
+						print_r($row);
 						$id_us = $row['custid'];
 						$order_id = $row['orderid'];
 						$get_us = pg_query($this->db, "SELECT * FROM customer WHERE id='$id_us'");	
@@ -379,6 +383,7 @@ class Get extends DB {
 							 No results
 							</div></div>';
 				}		
+				echo 'hoan tat';
 		}
 		
 		function getAdminOrderFollowReport($iddd){
