@@ -3,8 +3,24 @@ require_once './inc/config.php';
 $post = new Post();
 $get = new Get();
 if (!isset($_SESSION['user_id'])) {
-	header('Location: /');
-	exit;
+	if (isset($_SESSION['login_ad'])) {
+		if (isset($_GET['id'])) {
+		$idd = $_GET['id'];
+		if (isset($_POST['update_post'])) {
+				
+				//Them buoc kiem tra so sung sau
+				//Update vao CSDL
+				///$post->updateProduct($idd, $chuyenmuc, $tensp, $giatien, $linkanh, $mota, $cauhinh, $sale);
+				//echo '<script> alert("Updated new information!");</script>';
+			}
+		} else {
+			exit;
+		}
+	} else {
+		header('Location: /');
+		exit;
+	}
+	
 } else {	
 	if (isset($_GET['id'])) {
 		$idd = $_GET['id'];
