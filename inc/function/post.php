@@ -68,7 +68,7 @@ class Post extends DB {
 				} else {
 					//neu ton tai, kiem tra u and p
 					$check_log = pg_query($this->db,"SELECT * FROM customer WHERE email = '$email' and password = '$password'");
-					if(pg_num_rows($check_log) == 1) {
+					if(pg_num_rows($check_log) > 0) {
 						$row = pg_fetch_assoc($check_log);//->fetch_assoc();
 						$id_us = $row['id'];
 						if (!isset($_SESSION['user_id'])) {
@@ -77,7 +77,7 @@ class Post extends DB {
 						//Thêm đơn hàng mới
 						//$newporder = "INSERT INTO order_sp (custid, notes, list_sp, time, status) VALUES ('$id_us', '$notes', '$list_sp','$timee', 0)";
 						$newporder = "INSERT INTO order_sp (custid, store_id, notes, time, status) VALUES ('$id_us', '$store_id', '$notes','$timee', 0)";
-						pg_query($this->db,$newporder);
+						pg_query($this->db, $newporder);
 						$insert_row = pg_fetch_row($newporder);
 						$order_id = $insert_row[0];
 						//$order_id = $this->db->insert_id; //Lay duoc ma don hang roi
@@ -85,7 +85,7 @@ class Post extends DB {
 						foreach($_SESSION['cart'] as $productid => $soluong)  { 
 							//Chen giao order_details
 							$add_details = "INSERT INTO order_details (orderid, productid, qty) VALUES ('$order_id', '$productid','$soluong')";
-							pg_query($this->db,$add_details);
+							pg_query($this->db, $add_details);
 						}
 						//Add xong, gio hang trong!
 						$_SESSION['cart']=array();
