@@ -61,7 +61,7 @@ class Post extends DB {
 				
 			}
 	}
-	function addCartLog($email, $password, $notes, $store_id){
+	function addCartLog($email, $password, $notes, $branch_id){
 			//Luu array duoi dang Json
 			if (count($_SESSION['cart']) > 0) { //Kiem tra gio hang >0, tranh SPAM.
 				//$list_sp = json_encode($_SESSION['cart']); Day la cach cu,...cach moi la add rieng vao  table order_details
@@ -72,18 +72,19 @@ class Post extends DB {
 				if(pg_num_rows($result) == 0) { //khong ton tai, thi tao tài khoản mới
 					echo '<script> alert("This email doesn\'t exist! Please sign up to order!");</script>';
 				} else {
+					echo '<script> alert("Co tai khoan");</script>';
 					//neu ton tai, kiem tra u and p
 					$check_log = pg_query($this->db,"SELECT * FROM customer WHERE email = '$email' and password = '$password'");
 					if(pg_num_rows($check_log) > 0) {
 						$row = pg_fetch_assoc($check_log);//->fetch_assoc();
-						$id_us = $row['id'];
+						$id_us = $row['id']; echo $id_us;
 						if (!isset($_SESSION['user_id'])) {
 							$_SESSION['user_id'] = $id_us;
 						}
 						//Thêm đơn hàng mới
 						echo '<script> alert("Them don hang");</script>';
 						//Goi lai co san thay vi viet lai!!!
-						$this->addCartSession($notes, $store_id, $id_us);
+						$this->addCartSession($notes, $branch_id, $id_us);
 					} else {
 						echo '<script> alert("Email or password is incorrect!");</script>';
 					}
@@ -105,6 +106,8 @@ class Post extends DB {
 				if (!isset($_SESSION['address'])) {
 					$_SESSION['address']=$address;
 				}*/
+			} else {
+				echo '<script> alert("Cart is empty!");</script>';
 			}
 		//https://thisinterestsme.com/saving-php-array-database/
 	}
