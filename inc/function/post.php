@@ -143,11 +143,12 @@ class Post extends DB {
 						//Thêm đơn hàng mới
 						//$newporder = "INSERT INTO order_sp (custid, notes, list_sp, time, status) VALUES ('$id_us', '$notes', '$list_sp','$timee', 0)";
 						echo '<script>alert("insert");</script>';
-						$newporder = pg_query($this->db, "INSERT INTO order_sp (custid, store_id, notes, time, status) VALUES ('$id_us', '$store_id', '$notes','$timee', 0)");
+						$newporder = pg_query($this->db, "INSERT INTO order_sp (custid, store_id, notes, time, status) VALUES ('$id_us', '$store_id', '$notes','$timee', 0);
+						SELECT Currval('order_sp_custid_seq') LIMIT 1");
 						//$qkk = $newporder);
 						//$insert_row = pg_fetch_row($newporder);
 						$order_id = pg_last_oid($newporder);
-						echo '<script>alert('.$order_id .');</script>';
+						echo '<script>alert('.$order_id .$newporder.');</script>';
 						//$order_id = $this->db->insert_id; //Lay duoc ma don hang roi
 						//Bo sung cai moi. Them add vao order details
 						foreach($_SESSION['cart'] as $productid => $soluong)  { 
