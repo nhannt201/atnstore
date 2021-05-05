@@ -67,7 +67,7 @@ if (isset($_POST['login_ad'])) {
 		//Add luon vao CSDL
 		if ($stop_post == 0) {
 			$post->addProduct($chuyenmuc, $tensp, $giatien, $linkanh, $mota, $cauhinh, $sale);
-			echo '<script> alert("New product added!");</script>';
+			
 		}
 	}
 }

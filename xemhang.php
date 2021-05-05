@@ -48,7 +48,7 @@ if (isset($_POST['order_rs'])) {
 	
 	$branch_id = $_SESSION['store_id'];
 	if ($stop_post == 0) {
-		echo '<script>alert('.$branch_id.');</script>';
+		//echo '<script>alert('.$branch_id.');</script>';
 		$post->addCartReg($youare, stripcslashes($fullname), $email, $phonenumber, stripcslashes($notes), stripcslashes($address_order), md5($ps1), $branch_id);
 	}
 }

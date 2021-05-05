@@ -5,7 +5,38 @@
 			pg_set_client_encoding($conn, "UTF8");
 
 			$q2 = "
-
+DROP TABLE IF EXISTS order_details;
+DROP TABLE IF EXISTS order_sp;
+DROP TABLE IF EXISTS product;
+CREATE TABLE order_details (
+    orderid smallint,
+    productid smallint,
+    qty smallint
+);
+CREATE TABLE order_sp (
+    orderid SERIAL PRIMARY KEY,
+    custid smallint,
+    store_id smallint,
+    notes TEXT NOT NULL,
+    time TEXT NOT NULL,
+    status smallint
+);
+CREATE TABLE product (
+    productid SERIAL PRIMARY KEY,
+    category smallint,
+    name TEXT NOT NULL,
+    price integer,
+    img TEXT NOT NULL,
+    descc TEXT NOT NULL,
+    config TEXT NOT NULL,
+    sale smallint
+);
+CREATE TABLE store (
+    store_id SERIAL PRIMARY KEY,
+    store_name character varying(9) DEFAULT NULL::character varying,
+    store_address character varying(11) DEFAULT NULL::character varying,
+    store_phone character varying(10) DEFAULT NULL::character varying
+);
 
 				
 INSERT INTO product (productID, category, name, price, img, descc, config, sale) VALUES
