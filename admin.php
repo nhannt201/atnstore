@@ -37,7 +37,7 @@ if (isset($_POST['login_ad'])) {
 		if ($chuyenmuc == "") {
 			echo '<script> alert("Please select a brand!");</script>';
 		} else {
-		$tensp = addslashes($_POST['spname']);
+		$tensp = stripcslashes($_POST['spname']);
 		$giatien = $_POST['sotien'];
 		if ($giatien < 1000) {
 			echo '<script>alert("The amount must not be less than 1000vnd!");</script>';
@@ -48,12 +48,12 @@ if (isset($_POST['login_ad'])) {
 			echo '<script>alert("Invalid photo link!");</script>';
 			$stop_post = 1;
 		}
-		$mota = addslashes($_POST['motasp']);
+		$mota = stripcslashes($_POST['motasp']);
 		if (strlen($mota) < 50) {
 			echo '<script>alert("The description is too short, must be longer than 50 characters!");</script>';
 			$stop_post = 1;
 		}
-		$cauhinh = addslashes($_POST['cauhinhsp']);
+		$cauhinh = stripcslashes($_POST['cauhinhsp']);
 		if (strlen($cauhinh) < 50) {
 			echo '<script>alert("The details is too short, must be longer than 50 characters!");</script>';
 			$stop_post = 1;
@@ -74,9 +74,9 @@ if (isset($_POST['login_ad'])) {
 	//New Branch
 	if (isset($_POST['post_new_branch'])) {
 		
-		$store_name = addslashes($_POST['store_name']); 
-		$store_adr = addslashes($_POST['store_adr']); 
-		$store_phone = addslashes($_POST['store_phone']); 
+		$store_name = stripcslashes($_POST['store_name']); 
+		$store_adr = stripcslashes($_POST['store_adr']); 
+		$store_phone = stripcslashes($_POST['store_phone']); 
 		
 		//Them buoc kiem tra so sung sau
 		if (!$get->getCheckBranch($store_name)) {
