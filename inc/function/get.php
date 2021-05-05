@@ -88,7 +88,6 @@ class Get extends DB {
 			$check = pg_query($this->db, "SELECT * FROM product WHERE category='$id' ORDER BY RANDOM() LIMIT 4");	
 				if (pg_num_rows($check) > 0) { 
 					//$product = "";
-					echo 'co noi dung';
 					while($row = pg_fetch_assoc($check)) {
 						$name_url = preg_replace('/[^a-zA-Z0-9_%\[().\]\\/-]/s', '-', $row['name']);
 						//Xu li rut gon mo ta
@@ -107,7 +106,6 @@ class Get extends DB {
 							$sale_xl = $row['price'] - ($row['price']*($row['sale']/100));
 							$salee = '<mark>'.number_format($sale_xl).'đ</mark>  <hr>  <del><mark>'.number_format($row['price']).'₫</mark></del> -'.$row['sale'].'%';
 						}
-						echo "<br>chuan bi in";
 						echo '<div class="col-sm-3 py-2">
 										<div class="card"><a  href="/toys/'.strtolower($name_url).'_'.$row['productid'].'.html">
 										  <img class="card-img-top" src="'.$row['img'].'" class="img-responsive" style="width:100%" alt="'.$row['name'].'">
@@ -122,7 +120,6 @@ class Get extends DB {
 										</div>
 									</div>';
 					}		
-					echo "in xong~";
 					//return	$product;	
 				}				
 		}
@@ -991,10 +988,8 @@ class Get extends DB {
 		}
 		
 		function getBodySimilar($idd){
-			echo "loveeeeeeeee";
 			$check = pg_query($this->db, "SELECT * FROM category WHERE id=$idd");	
 				if (pg_num_rows($check) > 0) {
-					echo "noi dung";
 					$row = pg_fetch_assoc($check);
 					echo $row['name'];
 						echo '<div class="card" id="'.strtolower($row['name']).'">
@@ -1006,9 +1001,10 @@ class Get extends DB {
 								echo '  </div>
 								</div>
 							  </div>
-							</div><br>';				
+							</div><br>';	
+					$this->getBodySimilar($row['category']);
 				}	
-			echo "loi gi vay troi!!!";
+			
 		}
 		
 		
