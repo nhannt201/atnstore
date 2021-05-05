@@ -146,7 +146,9 @@ class Post extends DB {
 						$newporder = pg_query($this->db, "INSERT INTO order_sp (custid, store_id, notes, time, status) VALUES ('$id_us', '$store_id', '$notes','$timee', 0)");
 						//$qkk = $newporder);
 						//$insert_row = pg_fetch_row($newporder);
-						$order_id =  pg_last_oid($this->db, $newporder);
+						$get_new_id_before = pg_query($this->db, "SELECT * order_sp ORDER BY orderid DESC LIMIT = 1");
+						$row_get = pg_fetch_assoc($get_new_id_before);
+						$order_id =  $row_get['orderid']+1;//pg_last_oid( $newporder);
 						echo $order_id ;
 						echo '<script>alert("id=".'.$order_id .');</script>';
 						//$order_id = $this->db->insert_id; //Lay duoc ma don hang roi
@@ -190,6 +192,7 @@ class Post extends DB {
 			//}
 		//https://thisinterestsme.com/saving-php-array-database/
 	}
+	
 	
 	function LogUS($email, $password){
 			//Luu array duoi dang Json
