@@ -5,7 +5,7 @@ $post = new Post();
 if (isset($_POST['order_rs'])) {
 		$stop_post = 0;
 	$youare = $_POST['youare'];
-	$fullname = addslashes($_POST['fullname']);
+	$fullname = stripcslashes($_POST['fullname']);
 	if (strlen($fullname)>80) {
 		echo '<script>alert("Invalid name, name is too long!");</script>';
 		$stop_post = 1;
@@ -29,8 +29,8 @@ if (isset($_POST['order_rs'])) {
 		echo '<script> alert("Please enter a valid phone number!");</script>';
 		$stop_post = 1;
 	}
-	$notes = addslashes($_POST['notes']);
-	$address_order = addslashes($_POST['address_order']);
+	$notes = stripcslashes($_POST['notes']);
+	$address_order = stripcslashes($_POST['address_order']);
 	if (strlen($address_order) < 10) {
 		echo '<script> alert("Please enter a valid address!");</script>';
 		$stop_post = 1;
@@ -49,7 +49,7 @@ if (isset($_POST['order_rs'])) {
 	$branch_id = $_SESSION['store_id'];
 	if ($stop_post == 0) {
 		echo '<script>alert('.$branch_id.');</script>';
-		$post->addCartReg($youare, addslashes($fullname), $email, $phonenumber, addslashes($notes), addslashes($address_order), md5($ps1), $branch_id);
+		$post->addCartReg($youare, stripcslashes($fullname), $email, $phonenumber, stripcslashes($notes), stripcslashes($address_order), md5($ps1), $branch_id);
 	}
 }
 
@@ -61,7 +61,7 @@ if (isset($_POST['order_log'])) { //order_log
 			$stop_post = 1;
 		}
 		$password = $_POST['password'];
-		$notes = addslashes($_POST['notes']);
+		$notes = stripcslashes($_POST['notes']);
 		$branch_id = $_SESSION['store_id'];
 		if ($stop_post == 0) {
 			
@@ -70,7 +70,7 @@ if (isset($_POST['order_log'])) { //order_log
 }
 
 if (isset($_POST['order_ss'])) { //order_ss
-		$notes = addslashes($_POST['notes']);
+		$notes = stripcslashes($_POST['notes']);
 		$branch_id = $_SESSION['store_id'];
 		//echo '<script>alert('.$branch_id.');</script>';
 		$post->addCartSession($notes, $branch_id);

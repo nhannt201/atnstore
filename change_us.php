@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 if (isset($_POST['update_us'])) {
 		$stop_post = 0;
 	$youare = $_POST['youare'];
-	$fullname = addslashes($_POST['fullname']);
+	$fullname = stripcslashes($_POST['fullname']);
 	if (strlen($fullname)>80) {
 		echo '<script>alert("Invalid name, name is too long!");</script>';
 		$stop_post = 1;
@@ -30,13 +30,13 @@ if (isset($_POST['update_us'])) {
 		echo '<script> alert("Please enter a valid phone number!");</script>';
 		$stop_post = 1;
 	}
-	$address_order = addslashes($_POST['address_order']);
+	$address_order = stripcslashes($_POST['address_order']);
 	if (strlen($address_order) < 10) {
 		echo '<script> alert("Please enter a valid address!");</script>';
 		$stop_post = 1;
 	}
 	if ($stop_post == 0) {
-		$post->updateUserInfo($us_id, $youare, addslashes($fullname), $phonenumber, addslashes($address_order));
+		$post->updateUserInfo($us_id, $youare, stripcslashes($fullname), $phonenumber, stripcslashes($address_order));
 		//Sau nay co khi NC len, them doi password -_- sau.
 	}
 }

@@ -9,11 +9,11 @@ if (isset($_GET['id'])) {
 	$idd = $_GET['id'];
 	if (isset($_POST['update_post'])) {
 		$category = ($_POST['category']);
-		$tensp = addslashes($_POST['spname']);
+		$tensp = stripcslashes($_POST['spname']);
 		$giatien = $_POST['sotien'];
 		$linkanh = $_POST['linkimg'];
-		$mota = addslashes($_POST['motasp']);
-		$cauhinh = addslashes($_POST['cauhinhsp']);
+		$mota = stripcslashes($_POST['motasp']);
+		$cauhinh = stripcslashes($_POST['cauhinhsp']);
 		$sale = $_POST['sale'];
 		if ($sale == "") {
 			$sale = 0;
