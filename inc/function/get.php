@@ -993,6 +993,7 @@ class Get extends DB {
 				if (pg_num_rows($check) > 0) {
 					echo "noi dung";
 					$row = pg_fetch_assoc($check);
+					print_r($row);
 						echo '<!--Card '.$row['name'].'-->
 							<div class="card" id="'.strtolower($row['name']).'">
 							  <div class="card-header text-center"><h4>Other '.$row['name'].' products</h4></div>
