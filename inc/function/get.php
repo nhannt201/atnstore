@@ -307,7 +307,7 @@ class Get extends DB {
 		function getAdminOrder($num, $type=-1){
 			$qrr = "";
 			if ($type == -1) {
-				echo 'mac dinh -1';
+				//echo 'mac dinh -1';
 				if ($num == 0) {
 					$qrr = "SELECT * FROM order_sp ORDER BY orderid DESC LIMIT 20";
 				} else if ($num == 1) {
@@ -316,7 +316,7 @@ class Get extends DB {
 					$qrr = "SELECT * FROM order_sp WHERE status = 1 ORDER BY orderid DESC LIMIT 20 ";
 				}
 			} else {
-				echo 'co tuy chinh '.$type;
+				//echo 'co tuy chinh '.$type;
 				if ($num == 0) {
 					$qrr = "SELECT * FROM order_sp WHERE store_id='$type' ORDER BY orderid DESC LIMIT 20";
 				} else if ($num == 1) {
@@ -328,9 +328,9 @@ class Get extends DB {
 				
 			$check = pg_query($this->db, $qrr);	
 				if (pg_num_rows($check) > 0) { 
-					echo 'co noid ung';
+					//echo 'co noid ung';
 					while($row = pg_fetch_assoc($check)) {
-						print_r($row);
+						//print_r($row);
 						$id_us = $row['custid'];
 						$order_id = $row['orderid'];
 						$get_us = pg_query($this->db, "SELECT * FROM customer WHERE id='$id_us'");	
@@ -356,10 +356,11 @@ class Get extends DB {
 									//	}
 								$get_list_sp = pg_query($this->db, "SELECT * FROM order_details WHERE orderid='$order_id'");
 								//Lay so luong san pham
+							//	echo 'lay so luong';
 								while($row_get = pg_fetch_assoc($get_list_sp)) {
 									$soluong_total += $row_get['qty'];
 								}
-								if ($get_list_sp->num_rows > 0) { 
+								if (pg_num_rows($get_list_sp) > 0) { 
 									//$soluong_total = $get_list_sp->num_rows;
 									$row_sp = pg_fetch_assoc($get_list_sp); //{
 									echo '<tr> 
@@ -412,7 +413,7 @@ class Get extends DB {
 								while($row_get = pg_fetch_assoc($get_list_sp)) {
 									$soluong_total += $row_get['qty'];
 								}
-								if ($get_list_sp->num_rows > 0) { 
+								if (pg_num_rows($get_list_sp) > 0) { 
 									//$soluong_total = $get_list_sp->num_rows;
 									$row_sp = pg_fetch_assoc($get_list_sp); //{
 									echo '<tr> 
@@ -451,7 +452,7 @@ class Get extends DB {
 												//lay gia tien
 													//foreach($getLS as $key2 => $soluong)  { 
 														$check2 = pg_query($this->db, "SELECT * FROM product WHERE productid='$productid'");	
-														if ($check2->num_rows > 0) { 															
+														if (pg_num_rows($check2) > 0) { 															
 															while($row2 = pg_fetch_assoc($check2)) {
 																if ($row2['sale'] > 0) {
 																$sale_xl = $row2['price'] - ($row2['price']*($row2['sale']/100)); //lay gia tien giam gia
