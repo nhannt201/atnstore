@@ -142,10 +142,12 @@ class Post extends DB {
 						//}
 						//Thêm đơn hàng mới
 						//$newporder = "INSERT INTO order_sp (custid, notes, list_sp, time, status) VALUES ('$id_us', '$notes', '$list_sp','$timee', 0)";
+						echo '<script>alert("insert");</script>';
 						$newporder = "INSERT INTO order_sp (custid, store_id, notes, time, status) VALUES ('$id_us', '$store_id', '$notes','$timee', 0)";
 						pg_query($this->db,$newporder);
 						$insert_row = pg_fetch_row($newporder);
 						$order_id = $insert_row[0];
+						echo '<script>alert('.$order_id .');</script>';
 						//$order_id = $this->db->insert_id; //Lay duoc ma don hang roi
 						//Bo sung cai moi. Them add vao order details
 						foreach($_SESSION['cart'] as $productid => $soluong)  { 
@@ -166,6 +168,8 @@ class Post extends DB {
 					//}
 					
 				
+				} else {
+					echo '<script>alert("fail");</script>';
 				}
 				//$last_id = $this->db->insert_id;
 				
