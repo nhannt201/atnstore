@@ -81,8 +81,9 @@ class Post extends DB {
 							$_SESSION['user_id'] = $id_us;
 						}
 						//Thêm đơn hàng mới
+						echo '<script> alert("Them don hang");</script>';
 						//Goi lai co san thay vi viet lai!!!
-						$this->addCartSession($notes, $store_id);
+						$this->addCartSession($notes, $store_id, $id_us);
 					} else {
 						echo '<script> alert("Email or password is incorrect!");</script>';
 					}
@@ -108,7 +109,7 @@ class Post extends DB {
 		//https://thisinterestsme.com/saving-php-array-database/
 	}
 	
-	function addCartSession($notes, $store_id){
+	function addCartSession($notes, $store_id, $user_id=0){
 			//Luu array duoi dang Json
 			if (count($_SESSION['cart']) > 0) { //Kiem tra gio hang >0, tranh SPAM.
 				//$list_sp = json_encode($_SESSION['cart']); Day la cach cu,...cach moi la add rieng vao  table order_details
@@ -126,7 +127,12 @@ class Post extends DB {
 						//$id_us = $row['id'];
 						//if (!isset($_SESSION['user_id'])) {
 						//	$_SESSION['user_id'] = $id_us;
-						$id_us = $_SESSION['user_id'];
+						if ($user_id == 0) {
+							$id_us = $_SESSION['user_id'];
+						} else {
+							$id_us = $user_id;
+						}
+						
 						//}
 						//Thêm đơn hàng mới
 						//$newporder = "INSERT INTO order_sp (custid, notes, list_sp, time, status) VALUES ('$id_us', '$notes', '$list_sp','$timee', 0)";
