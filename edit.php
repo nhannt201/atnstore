@@ -9,11 +9,11 @@ if (isset($_GET['id'])) {
 	$idd = $_GET['id'];
 	if (isset($_POST['update_post'])) {
 		$category = ($_POST['category']);
-		$tensp = stripcslashes($_POST['spname']);
+		$tensp = pg_escape_string ($_POST['spname']);
 		$giatien = $_POST['sotien'];
 		$linkanh = $_POST['linkimg'];
-		$mota = stripcslashes($_POST['motasp']);
-		$cauhinh = stripcslashes($_POST['cauhinhsp']);
+		$mota = pg_escape_string ($_POST['motasp']);
+		$cauhinh = pg_escape_string ($_POST['cauhinhsp']);
 		$sale = $_POST['sale'];
 		if ($sale == "") {
 			$sale = 0;

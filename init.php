@@ -3,7 +3,7 @@
 			$conn = pg_connect("host=ec2-54-146-73-98.compute-1.amazonaws.com port=5432 dbname=d9em16ehhf5pme user=wofdatlexxslwy password=1666c34bee3841c53bfd8512e9a871179c3d7fd9beb920690162b79060bc7055");
 			//new PDO("pgsql:host=ec2-52-1-115-6.compute-1.amazonaws.com;port=5432;dbname=dfc9kg4tdm8436;user=wimolppypfmrfd;password=45bdbcb28245bfb01ce99e2a525bdab01b81e7aa922696c14984d800fcf9071b");
 			pg_set_client_encoding($conn, "UTF8");
-
+//DROP TABLE IF EXISTS product;
 			$q2 = "
 
 
