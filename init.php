@@ -38,7 +38,10 @@ CREATE TABLE store (
     store_phone character varying(10) DEFAULT NULL::character varying
 );
 
-				
+			INSERT INTO product ( category, name, price, img, descc, config, sale) VALUES
+( 1, 'House', 50000000, 'https://i.imgur.com/wKSwYzD.png', 'Get little ones excited for their future rides to school with the Little ', 'Get little ones excited for their future rides to schooles excited for their future rides to school with the Little d', 0)
+	
+	
 INSERT INTO product (productID, category, name, price, img, descc, config, sale) VALUES
 (1, 1, 'Calming Clouds™ Mobile &amp; Soother', 500000, 'https://i.imgur.com/wKSwYzD.png', 'Get little ones excited for their future rides to school with the Little People® Sit with Me School Bus! Get the fun started by pressing the Discovery Button to flip open the stop sign and pop open the door to let on passengers.', 'Get little ones excited for their future rides to school with the Little People® Sit with Me School Bus! Get the fun started by pressing the Discovery Button to flip open the stop sign and pop open the door to let on passengers.Get little ones excited for their future rides to school with the Little People® Sit with Me School Bus! Get the fun started by pressing the Discovery Button to flip open the stop sign and pop open the door to let on passengers.Get little ones excited for their future rid', 0),
 (2, 1, 'Fisher-Price® Twinkle &amp; Cuddle Cloud Soother', 725000, 'https://i.imgur.com/AguJUYK.png', 'The Twinkle &amp; Cuddle Cloud Soother from Fisher-Price is a cuddly friend that helps comfort and soothe your baby as they grow from the crib to a big-kid bed. ', 'The Twinkle &amp; Cuddle Cloud Soother from Fisher-Price is a cuddly friend that helps comfort and soothe your baby as they grow from the crib to a big-kid bed. The cloud easily attaches to most cribs and features the Ready, Settle, Sleep™ playlist of gentle music and soft white noise, which syncs with the multicolor light show to set a soothing scene for sweet dreams. And since every baby is different, you can easily customize the music, soothing nature sounds, volume, and light color to find the combination that works best for your little snoozer! As your baby grows, this snuggly soother becomes a comforting take-along pal.', 2),
