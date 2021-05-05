@@ -143,15 +143,13 @@ class Post extends DB {
 						//Thêm đơn hàng mới
 						//$newporder = "INSERT INTO order_sp (custid, notes, list_sp, time, status) VALUES ('$id_us', '$notes', '$list_sp','$timee', 0)";
 						echo '<script>alert("insert");</script>';
-						$newporder = pg_query($this->db, "INSERT INTO order_sp (custid, store_id, notes, time, status) VALUES ('$id_us', '$store_id', '$notes','$timee', 0)");
-						//$qkk = $newporder);
-						//$insert_row = pg_fetch_row($newporder);
+						$newporder = pg_query($this->db, "INSERT INTO order_sp (custid, store_id, notes, time, status) VALUES ('$id_us', '$store_id', '$notes','$timee', 0);
+						SELECT * FROM order_sp ORDER BY orderid DESC LIMIT 1");
 						//get ID Next			
-						$getID = pg_fetch_assoc(pg_query($this->db, "SELECT * FROM order_sp ORDER BY orderid DESC LIMIT 1"));
+						$getID = pg_fetch_assoc($newporder);
 						$order_id =  $getID['orderid'];//pg_last_oid( $newporder);
 						//End get ID
 						echo $order_id ;
-						echo '<script>alert("id=".'.$order_id .');</script>';
 						//$order_id = $this->db->insert_id; //Lay duoc ma don hang roi
 						//Bo sung cai moi. Them add vao order details
 						foreach($_SESSION['cart'] as $productid => $soluong)  { 
