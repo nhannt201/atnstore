@@ -68,7 +68,7 @@ class Post extends DB {
 				} else {
 					//neu ton tai, kiem tra u and p
 					$check_log = pg_query($this->db,"SELECT * FROM customer WHERE email = '$email' and password = '$password'");
-					if($check_log->num_rows == 1) {
+					if(pg_num_rows($check_log) == 1) {
 						$row = pg_fetch_assoc($check_log);//->fetch_assoc();
 						$id_us = $row['id'];
 						if (!isset($_SESSION['user_id'])) {
