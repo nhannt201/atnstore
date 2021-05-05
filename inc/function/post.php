@@ -5,7 +5,7 @@ class Post extends DB {
 	function addProduct($category, $tensp, $giatien, $linkanh, $mota, $cauhinh, $sale){
 		$query_it = "INSERT INTO product (category, name, price, img, descc, config, sale) VALUES ('$category', '$tensp', '$giatien', '$linkanh', '$mota', '$cauhinh', $sale)";
 		pg_query($this->db,$query_it);
-		echo '<script> alert("New product added!");</script>';
+		
 	}
 	//Add Branch
 	function addBranch($name, $address, $phone){
@@ -22,7 +22,7 @@ class Post extends DB {
 				//kiem tra email ton tai hay chua
 				$result = pg_query($this->db,"SELECT email FROM customer WHERE email = '$email'");
 				if(pg_num_rows($result) == 0) { //khong ton tai, thi tao tài khoản mới
-					echo '<script> alert("Tao tai khoan moi!");</script>';
+					//echo '<script> alert("Tao tai khoan moi!");</script>';
 
 					$query_it = pg_query($this->db, "INSERT INTO customer (youare, fullname, email, telephone, address, password) VALUES ('$youare', '$fullname', '$email', '$telephone', '$address','$password');
 					SELECT * FROM customer ORDER BY id DESC LIMIT 1");
@@ -34,7 +34,7 @@ class Post extends DB {
 					if (!isset($_SESSION['user_id'])) {
 							$_SESSION['user_id'] = $last_id;
 					}
-					echo '<script> alert("Lay ID!'.$last_id.'");</script>';
+					//echo '<script> alert("Lay ID!'.$last_id.'");</script>';
 					//Thêm đơn hàng mới
 					//$newporder = "INSERT INTO order_sp (custid, notes, list_sp, time, status) VALUES ('$last_id', '$notes', '$list_sp','$timee', 0)";
 					$newporder =  pg_query($this->db, "INSERT INTO order_sp (custid, store_id, notes, time, status) VALUES ('$last_id', '$branch_id', '$notes','$timee', 0);
@@ -42,14 +42,14 @@ class Post extends DB {
 					//$insert_row = pg_fetch_row($newporder);
 					$getID = pg_fetch_assoc($newporder);
 					$order_id =  $getID['orderid'];//pg_last_oid( $newporder);
-					echo '<script> alert("Lay ID don dang: '.$order_id.'");</script>';
+					//echo '<script> alert("Lay ID don dang: '.$order_id.'");</script>';
 					//Bo sung cai moi. Them add vao order details
 						foreach($_SESSION['cart'] as $productid => $soluong)  { 
 							//Chen giao order_details
 							$add_details = "INSERT INTO order_details (orderid, productid, qty) VALUES ('$order_id', '$productid','$soluong')";
 							pg_query($this->db,$add_details);
 						}
-						echo '<script> alert("Xong!");</script>';
+						//echo '<script> alert("Xong!");</script>';
 					//Add xong, gio hang trong!
 					$_SESSION['cart']=array();
 					//Them giỏ hang vao cookie
