@@ -21,11 +21,13 @@ class Post extends DB {
 				//kiem tra email ton tai hay chua
 				$result = pg_query($this->db,"SELECT email FROM customer WHERE email = '$email'");
 				if(pg_num_rows($result) == 0) { //khong ton tai, thi tao tài khoản mới
-					$query_it = "INSERT INTO customer (youare, fullname, email, telephone, address, password) VALUES ('$youare', '$fullname', '$email', '$telephone', '$address','$password')";
-					$qkk = pg_query($this->db,$query_it);
+					$query_it = pg_query($this->db, "INSERT INTO customer (youare, fullname, email, telephone, address, password) VALUES ('$youare', '$fullname', '$email', '$telephone', '$address','$password');
+					SELECT * FROM customer ORDER BY id DESC LIMIT 1");
+					//$qkk = pg_query($this->db,$query_it);
 					
-					$last_id = pg_last_oid($qkk);
-					
+					//$last_id = pg_last_oid($qkk);
+					$getID2 = pg_fetch_assoc($query_it);
+					$last_id =  $getID2['id'];//pg_last_oid( $newporder);
 					if (!isset($_SESSION['user_id'])) {
 							$_SESSION['user_id'] = $last_id;
 						}
@@ -51,6 +53,7 @@ class Post extends DB {
 					}
 					array_push($_SESSION['order'],$order_id); //them vao array
 					echo '<script> alert("Your order is being processed, we will contact you to confirm the order.\nThank you for ordering on ATN Toy Store!");</script>';
+					
 				} else {
 					echo '<script> alert("This email exists! Please sign in to order!");</script>';
 				}
@@ -78,27 +81,8 @@ class Post extends DB {
 							$_SESSION['user_id'] = $id_us;
 						}
 						//Thêm đơn hàng mới
-						//$newporder = "INSERT INTO order_sp (custid, notes, list_sp, time, status) VALUES ('$id_us', '$notes', '$list_sp','$timee', 0)";
-						$newporder = pg_query($this->db, "INSERT INTO order_sp (custid, store_id, notes, time, status) VALUES ('$id_us', '$store_id', '$notes','$timee', 0);
-						SELECT * FROM order_sp ORDER BY orderid DESC LIMIT 1");
-						//get ID Next			
-						$getID = pg_fetch_assoc($newporder);
-						$order_id =  $getID['orderid'];//pg_last_oid( $newporder);
-						//$order_id = $this->db->insert_id; //Lay duoc ma don hang roi
-						//Bo sung cai moi. Them add vao order details
-						foreach($_SESSION['cart'] as $productid => $soluong)  { 
-							//Chen giao order_details
-							$add_details = "INSERT INTO order_details (orderid, productid, qty) VALUES ('$order_id', '$productid','$soluong')";
-							pg_query($this->db, $add_details);
-						}
-						//Add xong, gio hang trong!
-						$_SESSION['cart']=array();
-						//Them giỏ hang vao cookie
-						if (!isset($_SESSION['order'])) {
-							$_SESSION['order']=array();
-						}
-						array_push($_SESSION['order'],$order_id); //them vao array
-						echo '<script> alert("Your order is being processed, we will contact you to confirm the order.\nThank you for ordering on ATN Toy Store!");</script>';
+						//Goi lai co san thay vi viet lai!!!
+						$this->addCartSession($notes, $store_id);
 					} else {
 						echo '<script> alert("Email or password is incorrect!");</script>';
 					}
