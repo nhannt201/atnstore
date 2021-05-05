@@ -48,6 +48,7 @@ if (isset($_GET['id'])) {
 
 						<?php $get->getProductInfo($id_dt); ?>
 						<?php $get->getBodySimilar(1); ?>
+						<?php $get->getProductRandom(1); ?>
 						
 						<!--Phan bo tro len dau trang-->
 						<script type='text/javascript' src="/js/sp.js"></script>
