@@ -11,7 +11,7 @@ class Post extends DB {
 	function addBranch($name, $address, $phone){
 		$query_it = "INSERT INTO store (store_name, store_address, store_phone) VALUES ('$name', '$address', '$phone')";
 		pg_query($this->db,$query_it);
-	}
+	} //INSERT INTO store (store_name, store_address, store_phone) VALUES ('Chester', 'Chester, UK', '7654242345');
 	//Add Cart
 	function addCartReg($youare, $fullname, $email, $telephone, $notes, $address, $password, $branch_id){
 			//Luu array duoi dang Json
