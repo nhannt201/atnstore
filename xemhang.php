@@ -70,7 +70,7 @@ if (isset($_POST['order_log'])) { //order_log
 if (isset($_POST['order_ss'])) { //order_ss
 		$notes = addslashes($_POST['notes']);
 		$branch_id = $_SESSION['store_id'];
-		echo '<script>alert('.$branch_id.');</script>';
+		//echo '<script>alert('.$branch_id.');</script>';
 		$post->addCartSession($notes, $branch_id);
 }
 

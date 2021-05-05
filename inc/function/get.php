@@ -486,7 +486,7 @@ class Get extends DB {
 									<table class="table table-bordered">
 									  <thead>
 										<tr>
-										  <th scope="col">orderid</th>
+										  <th scope="col">Order ID</th>
 										  <th scope="col">Date</th>
 										  <th scope="col">Quantily</th>
 										  <th scope="col">Price</th>

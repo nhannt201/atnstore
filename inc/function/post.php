@@ -142,7 +142,7 @@ class Post extends DB {
 						//}
 						//Thêm đơn hàng mới
 						//$newporder = "INSERT INTO order_sp (custid, notes, list_sp, time, status) VALUES ('$id_us', '$notes', '$list_sp','$timee', 0)";
-						echo '<script>alert("insert");</script>';
+					//	echo '<script>alert("insert");</script>';
 						$newporder = pg_query($this->db, "INSERT INTO order_sp (custid, store_id, notes, time, status) VALUES ('$id_us', '$store_id', '$notes','$timee', 0);
 						SELECT * FROM order_sp ORDER BY orderid DESC LIMIT 1");
 						//get ID Next			
@@ -157,7 +157,7 @@ class Post extends DB {
 							print_r($_SESSION['cart']);
 							$add_details = "INSERT INTO order_details (orderid, productid, qty) VALUES ('$order_id', '$productid','$soluong')";
 							pg_query($this->db,$add_details);
-							echo 'thanh cong!';
+						//	echo 'thanh cong!';
 						}
 						//Add xong, gio hang trong!
 						$_SESSION['cart']=array();
