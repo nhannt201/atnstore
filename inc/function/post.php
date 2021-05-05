@@ -5,6 +5,7 @@ class Post extends DB {
 	function addProduct($category, $tensp, $giatien, $linkanh, $mota, $cauhinh, $sale){
 		$query_it = "INSERT INTO product (category, name, price, img, descc, config, sale) VALUES ('$category', '$tensp', '$giatien', '$linkanh', '$mota', '$cauhinh', $sale)";
 		pg_query($this->db,$query_it);
+		echo '<script> alert("New product added!");</script>';
 	}
 	//Add Branch
 	function addBranch($name, $address, $phone){
