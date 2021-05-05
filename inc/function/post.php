@@ -149,13 +149,15 @@ class Post extends DB {
 						$getID = pg_fetch_assoc($newporder);
 						$order_id =  $getID['orderid'];//pg_last_oid( $newporder);
 						//End get ID
-						echo $order_id ;
+						//echo $order_id ;
 						//$order_id = $this->db->insert_id; //Lay duoc ma don hang roi
 						//Bo sung cai moi. Them add vao order details
 						foreach($_SESSION['cart'] as $productid => $soluong)  { 
 							//Chen giao order_details
+							print_r($_SESSION['cart']);
 							$add_details = "INSERT INTO order_details (orderid, productid, qty) VALUES ('$order_id', '$productid','$soluong')";
 							pg_query($this->db,$add_details);
+							echo 'thanh cong!';
 						}
 						//Add xong, gio hang trong!
 						$_SESSION['cart']=array();
